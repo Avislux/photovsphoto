@@ -40,7 +40,7 @@ public class NavigationDrawer {
     /** The view group that will contain the navigation drawer menu items. */
     private ListView drawerItems;
     private ArrayAdapter<DemoConfiguration.DemoFeature> adapter;
-
+    private ArrayAdapter<Configuration.Feature> adapter2;
     /** The id of the fragment container. */
     private int fragmentContainerId;
 
@@ -59,7 +59,7 @@ public class NavigationDrawer {
         // Keep a reference to the activity containing this navigation drawer.
         this.containingActivity = activity;
         this.drawerItems = drawerItemsContainer;
-        adapter = new ArrayAdapter<DemoConfiguration.DemoFeature>(activity, R.layout.nav_drawer_item) {
+        adapter2 = new ArrayAdapter<Configuration.Feature>(activity, R.layout.nav_drawer_item) {
             @Override
             public View getView(final int position, final View convertView,
                                 final ViewGroup parent) {
@@ -67,13 +67,13 @@ public class NavigationDrawer {
                 if (view == null) {
                     view = activity.getLayoutInflater().inflate(R.layout.nav_drawer_item, parent, false);
                 }
-                final DemoConfiguration.DemoFeature item = getItem(position);
+                final Configuration.Feature item = getItem(position);
                 ((ImageView) view.findViewById(R.id.drawer_item_icon)).setImageResource(item.iconResId);
                 ((TextView) view.findViewById(R.id.drawer_item_text)).setText(item.titleResId);
                 return view;
             }
         };
-        drawerItems.setAdapter(adapter);
+        drawerItems.setAdapter(adapter2);
         drawerItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view,
@@ -84,7 +84,7 @@ public class NavigationDrawer {
                     return;
                 }
 
-                DemoConfiguration.DemoFeature item = adapter.getItem(position);
+                Configuration.Feature item = adapter2.getItem(position);
                 final Fragment fragment = DemoInstructionFragment.newInstance(item.name);
 
                 activity.getSupportFragmentManager()
@@ -203,9 +203,9 @@ public class NavigationDrawer {
         closeDrawer();
     }
 
-    public void addDemoFeatureToMenu(DemoConfiguration.DemoFeature demoFeature) {
-        adapter.add(demoFeature);
-        adapter.notifyDataSetChanged();
+    public void addFeatureToMenu(Configuration.Feature feature) {
+        adapter2.add(feature);
+        adapter2.notifyDataSetChanged();
     }
 
     /**

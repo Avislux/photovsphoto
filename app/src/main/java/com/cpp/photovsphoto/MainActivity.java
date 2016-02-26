@@ -32,6 +32,7 @@ import com.amazonaws.mobileconnectors.cognito.DefaultSyncCallback;
 import com.amazonaws.mobileconnectors.cognito.Record;
 import com.cpp.photovsphoto.demo.DemoConfiguration;
 import com.cpp.photovsphoto.demo.HomeDemoFragment;
+import com.cpp.photovsphoto.navigation.Configuration;
 import com.cpp.photovsphoto.navigation.NavigationDrawer;
 import com.cpp.photovsphoto.demo.UserSettings;
 
@@ -109,13 +110,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Add navigation drawer menu items.
         // Home isn't a demo, but is fake as a demo.
-        DemoConfiguration.DemoFeature home = new DemoConfiguration.DemoFeature();
+        Configuration.Feature home = new Configuration.Feature();
         home.iconResId = R.mipmap.icon_home;
         home.titleResId = R.string.main_nav_menu_item_home;
-        navigationDrawer.addDemoFeatureToMenu(home);
+        navigationDrawer.addFeatureToMenu(home);
 
-        for (DemoConfiguration.DemoFeature demoFeature : DemoConfiguration.getDemoFeatureList()) {
-            navigationDrawer.addDemoFeatureToMenu(demoFeature);
+        for (Configuration.Feature feature : Configuration.getFeatureList()) {
+            navigationDrawer.addFeatureToMenu(feature);
         }
         setupSignInButtons();
 

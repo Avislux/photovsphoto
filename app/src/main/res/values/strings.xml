@@ -19,14 +19,14 @@
   <string name="title_activity_sign_in">Sign-in</string>
   <string name="button_text_sign_in">SIGN IN</string>
   <string name="button_text_sign_out">SIGN OUT</string>
-  <string name="main_nav_menu_default_user_text">\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020</string>
+  <string name="main_nav_menu_default_user_text">Guest</string>
   <string name="content_helper_error_title">No Content Viewer</string>
   <string name="content_helper_error_no_app">No Viewing App exists for content type \'%s\'.</string>
 
 
   <string name="text_Play_Solo_title">Play Solo</string>
   <string name='text_Analyze_title'>Analyze</string>
-    <string name='text_Analyze_overview'>Test the image recognition.</string>
+  <string name='text_Analyze_overview'>Test the image recognition.</string>
   <!-- USED BY DEMO FEATURES ONLY - YOU CAN DISCARD THESE WITH THE DEMO FOLDER -->
 
   <string name="fragment_demo_instruction_overview_header">Overview</string>
