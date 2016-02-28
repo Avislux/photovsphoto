@@ -32,7 +32,7 @@ public class InstructionFragment extends FragmentBase {
         return fragment;
     }
 
-    @Override
+    @Override //opens fragment demo instruction
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
 
@@ -48,16 +48,15 @@ public class InstructionFragment extends FragmentBase {
         final Configuration.Feature feature = Configuration.getFeatureByName(
                 demoFeatureName);
 
-        final TextView tvOverview = (TextView) view.findViewById(R.id.text_demo_feature_overview);
-        tvOverview.setText(feature.overviewResId);
+        //final TextView tvOverview = (TextView) view.findViewById(R.id.text_demo_feature_overview);
+
         final TextView tvDescription = (TextView) view.findViewById(
                 R.id.text_demo_feature_description);
-        tvDescription.setText(demoFeature.descriptionResId);
-        final TextView tvPoweredBy = (TextView) view.findViewById(
-                R.id.text_demo_feature_powered_by);
-        tvPoweredBy.setText(demoFeature.poweredByResId);
+        tvDescription.setText(feature.descriptionResId);
+       // final TextView tvPoweredBy = (TextView) view.findViewById(R.id.text_demo_feature_powered_by);
 
-        final ArrayAdapter<DemoConfiguration.DemoItem> adapter = new ArrayAdapter<DemoConfiguration.DemoItem>(
+
+        final ArrayAdapter<Configuration.navItem> adapter = new ArrayAdapter<Configuration.navItem>(
                 getActivity(), R.layout.list_item_icon_text_with_subtitle) {
             @Override
             public View getView(final int position, final View convertView,
@@ -67,7 +66,7 @@ public class InstructionFragment extends FragmentBase {
                     view = getActivity().getLayoutInflater()
                             .inflate(R.layout.list_item_demo_button_icon_text, parent, false);
                 }
-                final DemoConfiguration.DemoItem item = getItem(position);
+                final Configuration.navItem item = getItem(position);
                 final ImageView imageView = (ImageView) view.findViewById(R.id.list_item_icon);
                 imageView.setImageResource(item.iconResId);
                 final TextView title = (TextView) view.findViewById(R.id.list_item_title);
@@ -75,14 +74,14 @@ public class InstructionFragment extends FragmentBase {
                 return view;
             }
         };
-        adapter.addAll(demoFeature.demos);
+        adapter.addAll(feature.demos);
         final ListView listView = (ListView) view.findViewById(android.R.id.list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view,
                                     final int position, final long id) {
-                final DemoConfiguration.DemoItem item = adapter.getItem(position);
+                final Configuration.navItem item = adapter.getItem(position);
                 final AppCompatActivity activity = (AppCompatActivity) getActivity();
                 if (activity != null) {
                     final Fragment fragment = Fragment.instantiate(getActivity(),

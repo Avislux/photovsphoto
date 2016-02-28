@@ -48,14 +48,13 @@ public class DemoInstructionFragment extends DemoFragmentBase {
         final DemoConfiguration.DemoFeature demoFeature = DemoConfiguration.getDemoFeatureByName(
                 demoFeatureName);
 
-        final TextView tvOverview = (TextView) view.findViewById(R.id.text_demo_feature_overview);
-        tvOverview.setText(demoFeature.overviewResId);
+       // final TextView tvOverview = (TextView) view.findViewById(R.id.text_demo_feature_overview);
+       // tvOverview.setText(demoFeature.overviewResId);
         final TextView tvDescription = (TextView) view.findViewById(
                 R.id.text_demo_feature_description);
         tvDescription.setText(demoFeature.descriptionResId);
-        final TextView tvPoweredBy = (TextView) view.findViewById(
-                R.id.text_demo_feature_powered_by);
-        tvPoweredBy.setText(demoFeature.poweredByResId);
+       // final TextView tvPoweredBy = (TextView) view.findViewById(R.id.text_demo_feature_powered_by);
+       //  tvPoweredBy.setText(demoFeature.poweredByResId);
 
         final ArrayAdapter<DemoConfiguration.DemoItem> adapter = new ArrayAdapter<DemoConfiguration.DemoItem>(
                 getActivity(), R.layout.list_item_icon_text_with_subtitle) {

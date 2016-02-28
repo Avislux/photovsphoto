@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+              android:layout_width="wrap_content"
               android:layout_height="match_parent"
               android:layout_centerVertical="true"
-              android:orientation="vertical">
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <TextView
+         <!--   <TextView
                 android:text="@string/fragment_demo_instruction_overview_header"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -35,20 +35,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:textAppearance="?android:attr/textAppearanceLarge"/>-->
             <TextView
                 android:id="@+id/text_demo_feature_description"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/text_demo_feature_powered_by"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"/>
+            <!--    <TextView
+                   android:id="@+id/text_demo_feature_powered_by"
+                   android:paddingLeft="10dp"
+                   android:paddingRight="10dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:paddingTop="10dp"/>-->
         </LinearLayout>
     </ScrollView>
     <LinearLayout

@@ -23,7 +23,7 @@ import com.amazonaws.mobile.user.IdentityManager;
 import com.amazonaws.mobile.user.IdentityProvider;
 import com.cpp.photovsphoto.R;
 import com.cpp.photovsphoto.demo.DemoConfiguration;
-import com.cpp.photovsphoto.demo.DemoInstructionFragment;
+
 import com.cpp.photovsphoto.demo.HomeDemoFragment;
 
 import static com.cpp.photovsphoto.R.string.app_name;
@@ -85,7 +85,7 @@ public class NavigationDrawer {
                 }
 
                 Configuration.Feature item = adapter2.getItem(position);
-                final Fragment fragment = DemoInstructionFragment.newInstance(item.name);
+                final Fragment fragment = InstructionFragment.newInstance(item.name);
 
                 activity.getSupportFragmentManager()
                         .beginTransaction()
