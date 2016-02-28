@@ -39,7 +39,7 @@ public class NavigationDrawer {
 
     /** The view group that will contain the navigation drawer menu items. */
     private ListView drawerItems;
-    private ArrayAdapter<DemoConfiguration.DemoFeature> adapter;
+
     private ArrayAdapter<Configuration.Feature> adapter2;
     /** The id of the fragment container. */
     private int fragmentContainerId;
@@ -73,7 +73,7 @@ public class NavigationDrawer {
                 return view;
             }
         };
-        drawerItems.setAdapter(adapter2);
+        drawerItems.setAdapter(adapter2); //when item is clicked, open new activity
         drawerItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view,

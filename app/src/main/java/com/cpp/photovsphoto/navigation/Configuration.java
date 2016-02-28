@@ -17,7 +17,7 @@ public class Configuration {
 
     private static final List<Feature> features = new ArrayList<Feature>(); //fills navigation drawer
     static{
-        addFeature("analyze", R.mipmap.user_identity, R.string.text_Analyze_title,
+        addFeature("analyze", R.mipmap.user_identity, R.string.text_Analyze_title, //change mipmap images
                 R.string.text_Analyze_overview, R.string.text_Analyze_overview,
                 new navItem(R.string.text_Analyze_title, R.mipmap.user_identity,
                         R.string.text_Analyze_title, IdentityDemoFragment.class));

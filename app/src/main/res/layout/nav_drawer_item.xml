@@ -20,3 +20,4 @@
         android:text=""
         android:id="@+id/drawer_item_text" />
 </LinearLayout>
+<!-- gets instantiated in every drawer item-->

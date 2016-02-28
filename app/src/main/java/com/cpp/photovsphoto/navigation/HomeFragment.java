@@ -30,7 +30,7 @@ public class HomeFragment extends FragmentBase {
         return inflater.inflate(R.layout.fragment_home, container, false); //opens home_fragment
     }
 
-    @Override
+    @Override //change this function to change home menu. will take list from Configuration.
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
