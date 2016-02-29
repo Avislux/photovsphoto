@@ -16,9 +16,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cpp.photovsphoto.R;
-import com.cpp.photovsphoto.demo.DemoConfiguration;
-import com.cpp.photovsphoto.demo.DemoFragmentBase;
-import com.cpp.photovsphoto.demo.DemoInstructionFragment;
+import com.cpp.photovsphoto.navigation.Configuration;
+import com.cpp.photovsphoto.navigation.FragmentBase;
+import com.cpp.photovsphoto.navigation.InstructionFragment;
 
 public class HomeFragment extends FragmentBase {
 
@@ -30,12 +30,12 @@ public class HomeFragment extends FragmentBase {
         return inflater.inflate(R.layout.fragment_home, container, false); //opens home_fragment
     }
 
-    @Override //change this function to change home menu. will take list from Configuration.
+    @Override //TODO:change this function (might be another) to change home menu. will take list from Configuration.
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final DemoListAdapter adapter = new DemoListAdapter(getActivity());
-        adapter.addAll(DemoConfiguration.getDemoFeatureList());
+        final ListAdapter adapter = new ListAdapter(getActivity());
+        adapter.addAll(Configuration.getFeatureList());
 
         ListView listView = (ListView) view.findViewById(android.R.id.list);
         listView.setAdapter(adapter);
@@ -43,10 +43,10 @@ public class HomeFragment extends FragmentBase {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view,
                                     final int position, final long id) {
-                final DemoConfiguration.DemoFeature item = adapter.getItem(position);
+                final Configuration.Feature item = adapter.getItem(position);
                 final AppCompatActivity activity = (AppCompatActivity) getActivity();
                 if (activity != null) {
-                    final Fragment fragment = DemoInstructionFragment.newInstance(item.name);
+                    final Fragment fragment = InstructionFragment.newInstance(item.name);
 
                     activity.getSupportFragmentManager()
                         .beginTransaction()
@@ -64,10 +64,10 @@ public class HomeFragment extends FragmentBase {
         });
     }
 
-    private static final class DemoListAdapter extends ArrayAdapter<DemoConfiguration.DemoFeature> {
+    private static final class ListAdapter extends ArrayAdapter<Configuration.Feature> {
         private LayoutInflater inflater;
 
-        public DemoListAdapter(final Context context) {
+        public ListAdapter(final Context context) {
             super(context, R.layout.list_item_icon_text_with_subtitle);
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -88,7 +88,7 @@ public class HomeFragment extends FragmentBase {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            DemoConfiguration.DemoFeature item = getItem(position);
+            Configuration.Feature item = getItem(position);
             holder.iconImageView.setImageResource(item.iconResId);
             holder.titleTextView.setText(item.titleResId);
             holder.subtitleTextView.setText(item.subtitleResId);
