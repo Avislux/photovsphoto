@@ -8,8 +8,8 @@
   <!-- Suffix after '-' must be the app package name as specified in the build.gradle file. This
        is used by the com.amazonaws.mobile.downloader.query.DownloadQueueProvider class. -->
   <string name="download_queue_provider_authority">com.amazonaws.mobile.downloader-com.cpp.photovsphoto</string>
-  <string name="facebook_app_id">518392515004871</string> 
-  
+  <string name="facebook_app_id">518392515004871</string>
+
   <!-- REQUIRED FOR GENERAL APP FUNCTIONALITY - YOU MAY WANT TO KEEP THESE -->
 
   <string name="main_nav_menu_item_home">Home</string>
@@ -22,13 +22,11 @@
   <string name="main_nav_menu_default_user_text">Guest</string>
   <string name="content_helper_error_title">No Content Viewer</string>
   <string name="content_helper_error_no_app">No Viewing App exists for content type \'%s\'.</string>
-  <string name='textAnalyzeDescription'>Analyze</string>
-  <string name='textGo'>Go</string>
+
+
   <string name="text_Play_Solo_title">Play Solo</string>
   <string name='text_Analyze_title'>Analyze</string>
   <string name='text_Analyze_overview'>Test the image recognition.</string>
-  <string name='textAnalyzeDescription'>Test the photo analyzer!</string>
-  <string name='textGo'>Go</string>
   <!-- USED BY DEMO FEATURES ONLY - YOU CAN DISCARD THESE WITH THE DEMO FOLDER -->
 
   <string name="fragment_demo_instruction_overview_header">Overview</string>
@@ -137,4 +135,25 @@
   <string name="settings_fragment_dialog_title">Please wait &#8230;</string>
   <string name="settings_fragment_dialog_message">Loading&#8230;</string>
   <string name="settings_fragment_prompt">Please choose a theme:</string>
+  <!--string name="app_name">S3TransferUtility</string-->
+  <string name="upload_activity">UploadActivity</string>
+  <string name="download_activity">DownloadActivity</string>
+  <string name="download_selection_activity">Select a file from the bucket</string>
+  <string name="download">Download</string>
+  <string name="manage_download">Manage downloads</string>
+  <string name="upload">Upload</string>
+  <string name="manage_upload">Manage uploads</string>
+  <string name="upload_file">Upload a file</string>
+  <string name="upload_image">Upload an image</string>
+  <string name="pause">Pause</string>
+  <string name="resume">Resume</string>
+  <string name="cancel">Cancel</string>
+  <string name="delete">Delete</string>
+  <string name="pause_all">Pause all</string>
+  <string name="cancel_all">Cancel all</string>
+  <string name="refreshing">Refreshing</string>
+  <string name="please_wait">Please wait</string>
+  <string name="textGo">textGosamp</string>
+  <string name="textAnalyzeDescription">textsamp</string>
 </resources>
+
