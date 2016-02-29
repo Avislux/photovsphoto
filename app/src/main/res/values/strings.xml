@@ -27,6 +27,8 @@
   <string name="text_Play_Solo_title">Play Solo</string>
   <string name='text_Analyze_title'>Analyze</string>
   <string name='text_Analyze_overview'>Test the image recognition.</string>
+  <string name='textAnalyzeDescription'>Test the photo analyzer!</string>
+  <string name='textGo'>Go</string>
   <!-- USED BY DEMO FEATURES ONLY - YOU CAN DISCARD THESE WITH THE DEMO FOLDER -->
 
   <string name="fragment_demo_instruction_overview_header">Overview</string>

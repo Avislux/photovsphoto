@@ -1,6 +1,7 @@
 package com.cpp.photovsphoto.navigation;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 
 import com.cpp.photovsphoto.AnalyzeActivity;
 import com.cpp.photovsphoto.R;
@@ -73,13 +74,13 @@ public class Configuration {
         public int iconResId;
         public int buttonTextResId;
         public String fragmentClassName;
-
+//final Class<? extends Fragment> fragmentClass
         public navItem(final int titleResId, final int iconResId, final int buttonTextResId,
-                        final Class<? extends Fragment> fragmentClass) {
+                        final Class <? extends AppCompatActivity> activityClass) {
             this.titleResId = titleResId;
             this.iconResId = iconResId;
             this.buttonTextResId = buttonTextResId;
-            this.fragmentClassName = fragmentClass.getName();
+            this.fragmentClassName = activityClass.getName();
         }
     }
 }

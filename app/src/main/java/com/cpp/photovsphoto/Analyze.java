@@ -1,15 +1,6 @@
-package com.cpp.photovsphoto;
+/*
+package com.photovphoto.jonathan.photovphoto;
 
-import android.app.Fragment;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -25,72 +16,17 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import com.amazonaws.mobile.AWSMobileClient;
-import com.amazonaws.mobile.user.IdentityManager;
-import com.cpp.photovsphoto.navigation.FragmentBase;
 
-import java.io.File;
-import java.io.IOException;
+public class Analyze extends AppCompatActivity {
 
-/**
- * Created by Jonathan on 2/29/2016.
- */
-//originally extends FragmentBase/AppCompatActivity
-public class AnalyzeActivity extends AppCompatActivity {
-    /**
-     * Logging tag for this class.
-     */
-    private static final String LOG_TAG = "AnalyzeActivity";
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-
-    /**
-     * This fragment's view.
-     */
-    private View mFragmentView;
-
-    /**
-     * Text view for showing the user identity.
-     */
-    private TextView userIdTextView;
-
-    /**
-     * Text view for showing the user name.
-     */
-    private TextView userNameTextView;
-
-    /**
-     * Image view for showing the user image.
-     */
-    private ImageView userImageView;
-
-    /*
-            @Override //TODO: Modify other code to create this activity rather inflate fragment
-            public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                                     final Bundle savedInstanceState) {
-
-                // Inflate the layout for this fragment
-                mFragmentView = inflater.inflate(R.layout.activity_analyze, container, false);
-                //userNameTextView = (TextView) mFragmentView.findViewById(R.id.textView_demoIdentityUserName);
-                //userIdTextView = (TextView) mFragmentView.findViewById(R.id.textView_demoIdentityUserID);
-                //userImageView = (ImageView)mFragmentView.findViewById(R.id.imageView_demoIdentityUserImage);
-
-
-                return mFragmentView;
-            }
-
-            @Override
-            public void onDestroyView() {
-                super.onDestroyView();
-
-            }
-            */
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyze);
     }
-
-    public void onClickGo(View v) {
+    public void onClickGo(View v){
         dispatchTakePictureIntent();
     }
 
@@ -115,12 +51,12 @@ public class AnalyzeActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Intent takePictureIntent = getIntent();
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ImageView imageView = (ImageView) findViewById(R.id.imageViewPicture);
+            ImageView imageView = (ImageView)findViewById(R.id.imageViewPicture);
             imageView.setImageBitmap(imageBitmap); //set thumbnail to photo
 
         }
@@ -135,9 +71,9 @@ public class AnalyzeActivity extends AppCompatActivity {
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  // prefix
-                ".jpg",         // suffix
-                storageDir      // directory
+                imageFileName,  /* prefix
+                ".jpg",         /* suffix
+                storageDir      /* directory
         );
 
         // Save a file: path for use with ACTION_VIEW intents
@@ -148,11 +84,11 @@ public class AnalyzeActivity extends AppCompatActivity {
         return image;
     }
 
-    public void onClickThumbnail(View v) {
+
+    public void onClickThumbnail(View v){
         //expands iamge
     }
-
-    public void onClickUpload(View v) {
+    public void onClickUpload(View v){
         //upload to aws
     }
 
@@ -166,3 +102,6 @@ public class AnalyzeActivity extends AppCompatActivity {
         myToast.show();
     }
 }
+
+
+*/
