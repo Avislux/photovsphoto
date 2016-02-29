@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.photovphoto.jonathan.photovphoto.FinalScores">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Your Scores"
+        android:id="@+id/your_scores"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Their Scores"
+        android:id="@+id/their_scores"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="#000000" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/your_scores1"
+        android:layout_marginTop="63dp"
+        android:editable="true"
+        android:text="0"
+        android:textColor="#ff0000"
+        android:layout_below="@+id/your_scores"
+        android:layout_toStartOf="@+id/their_scores"
+        android:layout_alignRight="@+id/your_scores"
+        android:layout_alignEnd="@+id/your_scores" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/their_scores1"
+        android:layout_alignTop="@+id/your_scores1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/their_scores"
+        android:layout_alignStart="@+id/their_scores"
+        android:text="0"
+        android:textColor="#ff0000"
+        android:editable="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/your_scores2"
+        android:layout_below="@+id/your_scores1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:editable="true"
+        android:text="0"
+        android:textColor="#ff0000"
+        android:layout_alignRight="@+id/your_scores1"
+        android:layout_alignEnd="@+id/your_scores1" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/their_scores2"
+        android:layout_below="@+id/their_scores1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/their_scores1"
+        android:layout_alignStart="@+id/their_scores1"
+        android:text="0"
+        android:textColor="#ff0000"
+        android:enabled="false"
+        android:editable="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/your_scores3"
+        android:layout_below="@+id/your_scores2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/your_scores2"
+        android:layout_alignEnd="@+id/your_scores2"
+        android:editable="true"
+        android:text="0"
+        android:textColor="#ff0000" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/their_scores3"
+        android:layout_below="@+id/their_scores2"
+        android:layout_alignRight="@+id/their_scores2"
+        android:layout_alignEnd="@+id/their_scores2"
+        android:layout_alignLeft="@+id/their_scores2"
+        android:layout_alignStart="@+id/their_scores2"
+        android:textColor="#ff0000"
+        android:text="0"
+        android:editable="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/your_scores4"
+        android:layout_below="@+id/your_scores3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/your_scores3"
+        android:layout_alignEnd="@+id/your_scores3"
+        android:editable="true"
+        android:text="0"
+        android:textColor="#ff0000" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/their_scores4"
+        android:layout_below="@+id/their_scores3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/their_scores3"
+        android:layout_alignStart="@+id/their_scores3"
+        android:textColor="#ff0000"
+        android:text="0"
+        android:editable="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/your_scores5"
+        android:layout_below="@+id/your_scores4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/your_scores4"
+        android:layout_alignEnd="@+id/your_scores4"
+        android:editable="true"
+        android:text="0"
+        android:textColor="#ff0000" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/their_scores5"
+        android:layout_below="@+id/their_scores4"
+        android:layout_alignRight="@+id/their_scores4"
+        android:layout_alignEnd="@+id/their_scores4"
+        android:layout_alignLeft="@+id/their_scores4"
+        android:layout_alignStart="@+id/their_scores4"
+        android:textColor="#ff0000"
+        android:text="0"
+        android:editable="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:id="@+id/ok_button"
+        android:layout_marginTop="88dp"
+        android:layout_below="@+id/your_scores5"
+        android:layout_toLeftOf="@+id/their_scores5"
+        android:layout_toRightOf="@+id/your_scores5"
+        android:layout_toEndOf="@+id/your_scores5" />
+
+</RelativeLayout>
