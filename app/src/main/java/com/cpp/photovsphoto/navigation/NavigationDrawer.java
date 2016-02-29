@@ -1,6 +1,5 @@
 package com.cpp.photovsphoto.navigation;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -208,25 +207,7 @@ public class NavigationDrawer {
         adapter2.add(feature);
         adapter2.notifyDataSetChanged();
     }
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id)
-    {
-        // TODO Auto-generated method stub
-        super.onListItemClick(l, v, position, id);
 
-        if (position == 0) {
-            Intent intent = new Intent(this, QuizActivity.class);
-            startActivity(intent);
-        }
-        else if (position == 1) {
-            Intent intent = new Intent(this, SignUp.class);
-            startActivity(intent);
-        }
-        else if (position == 2) {
-            Intent intent = new Intent(this, FriendList.class);
-            startActivity(intent);
-        }
-    }
     /**
      * Closes the navigation drawer.
      */
