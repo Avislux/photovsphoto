@@ -2,6 +2,7 @@ package com.cpp.photovsphoto.navigation;
 
 import android.support.v4.app.Fragment;
 
+import com.cpp.photovsphoto.AnalyzeActivity;
 import com.cpp.photovsphoto.R;
 import com.cpp.photovsphoto.demo.IdentityDemoFragment;
 
@@ -15,12 +16,12 @@ import java.util.List;
  */
 public class Configuration {
 
-    private static final List<Feature> features = new ArrayList<Feature>(); //fills navigation drawer
+    private static final List<Feature> features = new ArrayList<Feature>(); //fills navigation drawer and home screen
     static{
-        addFeature("analyze", R.mipmap.user_identity, R.string.text_Analyze_title, //change mipmap images
+        addFeature("analyze", R.mipmap.user_identity, R.string.text_Analyze_title, //TODO: change mipmap images
                 R.string.text_Analyze_overview, R.string.text_Analyze_overview,
                 new navItem(R.string.text_Analyze_title, R.mipmap.user_identity,
-                        R.string.text_Analyze_title, IdentityDemoFragment.class));
+                        R.string.text_Analyze_title, AnalyzeActivity.class));
     }
 
     public static List<Feature> getFeatureList() {

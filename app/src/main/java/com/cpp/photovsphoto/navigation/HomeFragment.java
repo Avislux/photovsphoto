@@ -22,7 +22,7 @@ import com.cpp.photovsphoto.navigation.InstructionFragment;
 
 public class HomeFragment extends FragmentBase {
 
-    @Override
+    @Override //TODO: Fix back button showing the demo stuff
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
 
@@ -30,7 +30,7 @@ public class HomeFragment extends FragmentBase {
         return inflater.inflate(R.layout.fragment_home, container, false); //opens home_fragment
     }
 
-    @Override //TODO:change this function (might be another) to change home menu. will take list from Configuration.
+    @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -39,6 +39,7 @@ public class HomeFragment extends FragmentBase {
 
         ListView listView = (ListView) view.findViewById(android.R.id.list);
         listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view,

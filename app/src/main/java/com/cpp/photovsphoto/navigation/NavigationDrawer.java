@@ -22,9 +22,9 @@ import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.amazonaws.mobile.user.IdentityProvider;
 import com.cpp.photovsphoto.R;
-import com.cpp.photovsphoto.demo.DemoConfiguration;
+import com.cpp.photovsphoto.navigation.Configuration;
 
-import com.cpp.photovsphoto.demo.HomeDemoFragment;
+import com.cpp.photovsphoto.navigation.HomeFragment;
 
 import static com.cpp.photovsphoto.R.string.app_name;
 
@@ -73,11 +73,11 @@ public class NavigationDrawer {
                 return view;
             }
         };
-        drawerItems.setAdapter(adapter2); //when item is clicked, open new activity
+        drawerItems.setAdapter(adapter2);
         drawerItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view,
-                                    final int position, final long id) {
+                                    final int position, final long id) {//when item is clicked, open new activity
                 if (position == 0) {
                     // home
                     showHome();
@@ -189,11 +189,11 @@ public class NavigationDrawer {
     }
 
     public void showHome() {
-        final Fragment fragment = new HomeDemoFragment();
+        final Fragment fragment = new HomeFragment();
 
         containingActivity.getSupportFragmentManager()
                 .beginTransaction()
-                .replace(fragmentContainerId, fragment, HomeDemoFragment.class.getSimpleName())
+                .replace(fragmentContainerId, fragment, HomeFragment.class.getSimpleName())
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
 

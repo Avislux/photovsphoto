@@ -20,6 +20,7 @@ import com.cpp.photovsphoto.R;
 /**
  * A fragment that shows a brief instruction of demos.
  */
+//TODO: This isn't actually necessary.
 public class InstructionFragment extends FragmentBase {
 
     private static final String ARGUMENT_DEMO_FEATURE_NAME = "feature_name";
