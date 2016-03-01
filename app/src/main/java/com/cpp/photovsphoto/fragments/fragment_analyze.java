@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amazonaws.services.s3.internal.Constants;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.cpp.photovsphoto.R;
 import com.cpp.photovsphoto.navigation.FragmentBase;
 
@@ -80,16 +83,24 @@ public class fragment_analyze extends FragmentBase {
 
     }
     Button goButton;
+    Button uploadButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_analyze, container, false);
         goButton = (Button) view.findViewById(R.id.buttonGo);
+        uploadButton = (Button) view.findViewById(R.id.buttonUpload);
         goButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 dispatchTakePictureIntent();
+            }
+        });
+        uploadButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                onClickUpload();
             }
         });
         return view ;
@@ -161,14 +172,17 @@ public class fragment_analyze extends FragmentBase {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
         }
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            Log.d("AnalyzeFragment: ", "startActivityforResult got called");
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 
         }
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) { //TODO: This bit doesn't work
+        Log.d("AnalyzeFragment: ", "onActivityResult got called");
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            Log.d("AnalyzeFragment: ", "got into the if block");
             Intent takePictureIntent = getActivity().getIntent();
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
@@ -204,8 +218,11 @@ public class fragment_analyze extends FragmentBase {
         //expands iamge
     }
 
-    public void onClickUpload(View v) {
+    public void onClickUpload() {
         //upload to aws
+        //TODO: Find and copy code from userfilesdemofragment
+       // PutObjectRequest por = new PutObjectRequest( Constants.getPictureBucket(), Constants.PICTURE_NAME, new java.io.File( filePath) );
+        //s3Client.putObject( por );
     }
 
     private void galleryAddPic() {
