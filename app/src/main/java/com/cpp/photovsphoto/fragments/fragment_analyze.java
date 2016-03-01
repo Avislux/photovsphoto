@@ -105,7 +105,7 @@ public class fragment_analyze extends FragmentBase {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        public void onFragmentInteraction(Uri uri);
     }
 
 }

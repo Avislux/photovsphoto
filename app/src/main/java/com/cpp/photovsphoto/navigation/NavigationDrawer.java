@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -18,11 +19,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.app.FragmentManager;
+
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.amazonaws.mobile.user.IdentityProvider;
 import com.cpp.photovsphoto.R;
+import com.cpp.photovsphoto.fragments.fragment_analyze;
 import com.cpp.photovsphoto.navigation.Configuration;
 
 import com.cpp.photovsphoto.navigation.HomeFragment;
@@ -89,9 +91,9 @@ public class NavigationDrawer extends FragmentActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 switch(position)
                 {
-                    case 0:
+                    case 1:
                         fragmentManager.beginTransaction()
-                                .replace(R.id.main_fragment_container, fragment_analyze.newInstance())
+                                .replace(R.id.main_fragment_container, fragment_analyze.newInstance("blah1","blah2"))
                                 .commit();
                         break;
                     /*
