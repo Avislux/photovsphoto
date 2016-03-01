@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.cpp.photovsphoto.R;
  * A fragment that shows a brief instruction of demos.
  */
 //TODO: This isn't actually necessary.
+    /*
 public class InstructionFragment extends FragmentBase {
 
     private static final String ARGUMENT_DEMO_FEATURE_NAME = "feature_name";
@@ -38,6 +40,7 @@ public class InstructionFragment extends FragmentBase {
                              final Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
+        Log.d("InstructionFragment:", "new view created");
         return inflater.inflate(R.layout.fragment_demo_instruction, container, false);
     }
 
@@ -51,10 +54,9 @@ public class InstructionFragment extends FragmentBase {
 
         //final TextView tvOverview = (TextView) view.findViewById(R.id.text_demo_feature_overview);
 
-        final TextView tvDescription = (TextView) view.findViewById(
-                R.id.text_demo_feature_description);
-        tvDescription.setText(feature.descriptionResId);
-       // final TextView tvPoweredBy = (TextView) view.findViewById(R.id.text_demo_feature_powered_by);
+        //final TextView tvDescription = (TextView) view.findViewById(R.id.text_demo_feature_description);
+        //tvDescription.setText(feature.descriptionResId);
+        // final TextView tvPoweredBy = (TextView) view.findViewById(R.id.text_demo_feature_powered_by);
 
 
         final ArrayAdapter<Configuration.navItem> adapter = new ArrayAdapter<Configuration.navItem>(
@@ -75,7 +77,7 @@ public class InstructionFragment extends FragmentBase {
                 return view;
             }
         };
-        adapter.addAll(feature.demos);
+        adapter.addAll(feature.listItems);
         final ListView listView = (ListView) view.findViewById(android.R.id.list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -114,3 +116,4 @@ public class InstructionFragment extends FragmentBase {
         }.execute();
     }
 }
+*/

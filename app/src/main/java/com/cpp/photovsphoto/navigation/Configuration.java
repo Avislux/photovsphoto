@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.cpp.photovsphoto.AnalyzeActivity;
 import com.cpp.photovsphoto.R;
 import com.cpp.photovsphoto.demo.IdentityDemoFragment;
+import com.cpp.photovsphoto.fragments.fragment_analyze;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,9 +21,9 @@ public class Configuration {
     private static final List<Feature> features = new ArrayList<Feature>(); //fills navigation drawer and home screen
     static{
         addFeature("analyze", R.mipmap.user_identity, R.string.text_Analyze_title, //TODO: change mipmap images
-                R.string.text_Analyze_overview, R.string.text_Analyze_overview,
+                 R.string.text_Analyze_overview,
                 new navItem(R.string.text_Analyze_title, R.mipmap.user_identity,
-                        R.string.text_Analyze_title, AnalyzeActivity.class));
+                        R.string.text_Analyze_title, fragment_analyze.class));
     }
 
     public static List<Feature> getFeatureList() {
@@ -37,10 +38,10 @@ public class Configuration {
         return null;
     }
     private static void addFeature(final String name, final int iconResId, final int titleResId,
-                                   final int subtitleResId,
+
                                    final int descriptionResId,
                                    final navItem... demoItems) {
-        Feature feature = new Feature(name, iconResId, titleResId, subtitleResId,
+        Feature feature = new Feature(name, iconResId, titleResId,
                 descriptionResId,  demoItems);
         features.add(feature);
     }
@@ -50,23 +51,17 @@ public class Configuration {
         public int titleResId;
         public int subtitleResId;
         public int descriptionResId;
-        public List<navItem> demos;
-        public Feature() {
-
-        }
+        public List<navItem> listItems;
+        public Feature(){} //this is a blank declaration for home "feature"
 
         public Feature(final String name, final int iconResId, final int titleResId,
-                       final int subtitleResId,
                        final int descriptionResId,
-                       final navItem... demoItems) {
+                       final navItem... menuItems) { // ... is arbitrary number of arguments
             this.name = name;
             this.iconResId = iconResId;
             this.titleResId = titleResId;
-            this.subtitleResId = subtitleResId;
-
             this.descriptionResId = descriptionResId;
-
-            this.demos = Arrays.asList(demoItems);
+            this.listItems = Arrays.asList(menuItems);
         }
     }
     public static class navItem {
@@ -76,11 +71,11 @@ public class Configuration {
         public String fragmentClassName;
 //final Class<? extends Fragment> fragmentClass
         public navItem(final int titleResId, final int iconResId, final int buttonTextResId,
-                        final Class <? extends AppCompatActivity> activityClass) {
+                        final Class <? extends Fragment> fragmentClass) {
             this.titleResId = titleResId;
             this.iconResId = iconResId;
             this.buttonTextResId = buttonTextResId;
-            this.fragmentClassName = activityClass.getName();
+            this.fragmentClassName = fragmentClass.getName();
         }
     }
 }

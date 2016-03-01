@@ -32,13 +32,14 @@ import com.amazonaws.mobileconnectors.cognito.DefaultSyncCallback;
 import com.amazonaws.mobileconnectors.cognito.Record;
 import com.cpp.photovsphoto.demo.DemoConfiguration;
 import com.cpp.photovsphoto.demo.HomeDemoFragment;
+import com.cpp.photovsphoto.fragments.fragment_analyze;
 import com.cpp.photovsphoto.navigation.Configuration;
 import com.cpp.photovsphoto.navigation.NavigationDrawer;
 import com.cpp.photovsphoto.demo.UserSettings;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, fragment_analyze.OnFragmentInteractionListener {
     /** Class name for log messages. */
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
 

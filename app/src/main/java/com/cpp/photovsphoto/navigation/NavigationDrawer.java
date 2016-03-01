@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -17,7 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import android.app.FragmentManager;
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.amazonaws.mobile.user.IdentityProvider;
@@ -28,7 +29,7 @@ import com.cpp.photovsphoto.navigation.HomeFragment;
 
 import static com.cpp.photovsphoto.R.string.app_name;
 
-public class NavigationDrawer {
+public class NavigationDrawer extends FragmentActivity {
     private AppCompatActivity containingActivity;
 
     /** The helper class used to toggle the left navigation drawer open and closed. */
@@ -40,7 +41,7 @@ public class NavigationDrawer {
     /** The view group that will contain the navigation drawer menu items. */
     private ListView drawerItems;
 
-    private ArrayAdapter<Configuration.Feature> adapter2;
+    private ArrayAdapter<Configuration.Feature> adapter;
     /** The id of the fragment container. */
     private int fragmentContainerId;
 
@@ -59,7 +60,7 @@ public class NavigationDrawer {
         // Keep a reference to the activity containing this navigation drawer.
         this.containingActivity = activity;
         this.drawerItems = drawerItemsContainer;
-        adapter2 = new ArrayAdapter<Configuration.Feature>(activity, R.layout.nav_drawer_item) {
+        adapter = new ArrayAdapter<Configuration.Feature>(activity, R.layout.nav_drawer_item) {
             @Override
             public View getView(final int position, final View convertView,
                                 final ViewGroup parent) {
@@ -73,18 +74,38 @@ public class NavigationDrawer {
                 return view;
             }
         };
-        drawerItems.setAdapter(adapter2);
+        drawerItems.setAdapter(adapter);
         drawerItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view,
-                                    final int position, final long id) {//when item is clicked, open new activity
+                                    final int position, final long id) {//when item is clicked, open new activity and close drawer
                 if (position == 0) {
                     // home
                     showHome();
                     return;
                 }
 
-                Configuration.Feature item = adapter2.getItem(position);
+                Configuration.Feature item = adapter.getItem(position);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                switch(position)
+                {
+                    case 0:
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.main_fragment_container, fragment_analyze.newInstance())
+                                .commit();
+                        break;
+                    /*
+                    case 1:
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.container, Fragment2.newInstance())
+                                .commit();
+                    case 2:
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.container, Fragment3.newInstance())
+                                .commit();
+                        break;*/
+                }
+                /*
                 final Fragment fragment = InstructionFragment.newInstance(item.name);
 
                 activity.getSupportFragmentManager()
@@ -92,7 +113,7 @@ public class NavigationDrawer {
                         .replace(fragmentContainerId, fragment, item.name)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
-
+                */
                 // Set the title for the fragment.
                 final ActionBar actionBar = activity.getSupportActionBar();
                 if (actionBar != null) {
@@ -204,8 +225,8 @@ public class NavigationDrawer {
     }
 
     public void addFeatureToMenu(Configuration.Feature feature) {
-        adapter2.add(feature);
-        adapter2.notifyDataSetChanged();
+        adapter.add(feature);
+        adapter.notifyDataSetChanged();
     }
 
     /**

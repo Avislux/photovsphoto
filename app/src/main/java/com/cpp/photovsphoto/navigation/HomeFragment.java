@@ -16,9 +16,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cpp.photovsphoto.R;
+import com.cpp.photovsphoto.fragments.fragment_analyze;
 import com.cpp.photovsphoto.navigation.Configuration;
 import com.cpp.photovsphoto.navigation.FragmentBase;
-import com.cpp.photovsphoto.navigation.InstructionFragment;
+//import com.cpp.photovsphoto.navigation.InstructionFragment;
 
 public class HomeFragment extends FragmentBase {
 
@@ -47,8 +48,9 @@ public class HomeFragment extends FragmentBase {
                 final Configuration.Feature item = adapter.getItem(position);
                 final AppCompatActivity activity = (AppCompatActivity) getActivity();
                 if (activity != null) {
-                    final Fragment fragment = InstructionFragment.newInstance(item.name);
 
+                  //  final Fragment fragment = InstructionFragment.newInstance(item.name);
+                    final Fragment fragment = new fragment_analyze();
                     activity.getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_fragment_container, fragment, item.name)
@@ -82,7 +84,7 @@ public class HomeFragment extends FragmentBase {
                 holder = new ViewHolder();
                 holder.iconImageView = (ImageView) view.findViewById(R.id.list_item_icon);
                 holder.titleTextView = (TextView) view.findViewById(R.id.list_item_title);
-                holder.subtitleTextView = (TextView) view.findViewById(R.id.list_item_subtitle);
+               // holder.subtitleTextView = (TextView) view.findViewById(R.id.list_item_subtitle);
                 view.setTag(holder);
             } else {
                 view = convertView;
@@ -92,7 +94,7 @@ public class HomeFragment extends FragmentBase {
             Configuration.Feature item = getItem(position);
             holder.iconImageView.setImageResource(item.iconResId);
             holder.titleTextView.setText(item.titleResId);
-            holder.subtitleTextView.setText(item.subtitleResId);
+
 
             return view;
         }
