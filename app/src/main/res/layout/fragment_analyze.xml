@@ -1,13 +1,49 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.analyze">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/textAnalyzeDescription"
+        android:id="@+id/textViewAnalyzeDescription"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:singleLine="true"
+        android:textColor="#000000" />
 
-</FrameLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageViewPicture"
+        android:layout_alignParentTop="false"
+        android:layout_centerInParent="true"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentLeft="false"
+        android:contentDescription="picture thumbnail" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Upload"
+        android:id="@+id/textViewUpload"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#000000"
+        android:textSize="25sp"
+        android:onClick="onClickUpload" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textGo"
+        android:id="@+id/buttonGo"
+        android:layout_marginTop="103dp"
+        android:layout_below="@+id/textViewAnalyzeDescription"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

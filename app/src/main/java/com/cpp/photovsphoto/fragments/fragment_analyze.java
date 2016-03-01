@@ -1,29 +1,44 @@
 package com.cpp.photovsphoto.fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cpp.photovsphoto.R;
 import com.cpp.photovsphoto.navigation.FragmentBase;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link analyze.OnFragmentInteractionListener} interface
+ * {@link fragment_analyze.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link analyze#newInstance} factory method to
+ * Use the {@link fragment_analyze#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class fragment_analyze extends FragmentBase {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String LOG_TAG = "AnalyzeActivity";
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -62,13 +77,22 @@ public class fragment_analyze extends FragmentBase {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
 
+    }
+    Button goButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_analyze, container, false);
+        View view = inflater.inflate(R.layout.fragment_analyze, container, false);
+        goButton = (Button) view.findViewById(R.id.buttonGo);
+        goButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
+            }
+        });
+        return view ;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -120,4 +144,78 @@ public class fragment_analyze extends FragmentBase {
         public void onFragmentInteraction(Uri uri);
     }
 
+
+
+    private void dispatchTakePictureIntent() { //opens camera app
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File photoFile = null;
+        try {
+            photoFile = createImageFile();
+
+            galleryAddPic();
+        } catch (IOException ex) {
+            // Error occurred while creating the File
+            ex.printStackTrace();
+        }
+        if (photoFile != null) {
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+        }
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            Intent takePictureIntent = getActivity().getIntent();
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ImageView imageView = (ImageView) getView().findViewById(R.id.imageViewPicture);
+            imageView.setImageBitmap(imageBitmap); //set thumbnail to photo
+
+        }
+    }
+
+    String mCurrentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  // prefix
+                ".jpg",         // suffix
+                storageDir      // directory
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        String toastText = "Image saved " + image.getAbsolutePath();
+        Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_LONG);
+        myToast.show();
+        return image;
+    }
+
+    public void onClickThumbnail(View v) {
+        //expands iamge
+    }
+
+    public void onClickUpload(View v) {
+        //upload to aws
+    }
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        getActivity().sendBroadcast(mediaScanIntent);
+        Toast myToast = Toast.makeText(getActivity(), "Added to gallery but not really", Toast.LENGTH_LONG);
+        myToast.show();
+
+    }
 }

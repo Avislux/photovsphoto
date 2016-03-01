@@ -27,6 +27,8 @@
     <string name="text_Play_Solo_title">Play Solo</string>
     <string name='text_Analyze_title'>Analyze</string>
     <string name='text_Analyze_overview'>Test the image recognition.</string>
+    <string name="textGo">Go</string>
+    <string name="textAnalyzeDescription">Test the image recognition!</string>
     <!-- USED BY DEMO FEATURES ONLY - YOU CAN DISCARD THESE WITH THE DEMO FOLDER -->
 
     <string name="fragment_demo_instruction_overview_header">Overview</string>
@@ -153,8 +155,7 @@
     <string name="cancel_all">Cancel all</string>
     <string name="refreshing">Refreshing</string>
     <string name="please_wait">Please wait</string>
-    <string name="textGo">textGosamp</string>
-    <string name="textAnalyzeDescription">textsamp</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
