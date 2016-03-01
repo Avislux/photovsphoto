@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -42,7 +43,7 @@ public class NavigationDrawer extends FragmentActivity {
 
     /** The view group that will contain the navigation drawer menu items. */
     private ListView drawerItems;
-
+    private String logTag = "NavDrawer: ";
     private ArrayAdapter<Configuration.Feature> adapter;
     /** The id of the fragment container. */
     private int fragmentContainerId;
@@ -81,26 +82,25 @@ public class NavigationDrawer extends FragmentActivity {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view,
                                     final int position, final long id) {//when item is clicked, open new activity and close drawer
-                if (position == 0) {
-                    // home
-                    showHome();
-                    return;
-                }
 
+                final Fragment fragment = new fragment_analyze();
                 Configuration.Feature item = adapter.getItem(position);
-                FragmentManager fragmentManager = getSupportFragmentManager();
+
                 switch(position)
                 {
-                    case 1:
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.main_fragment_container, fragment_analyze.newInstance("blah1","blah2"))
-                                .commit();
+                    case 0:
+                        showHome();
+                        Log.d(logTag, "Showing home");
                         break;
-                    /*
+
                     case 1:
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.container, Fragment2.newInstance())
+                        Log.d(logTag, "Case 1");
+                        activity.getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.main_fragment_container, fragment, item.name)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .commit();
+                        /*
                     case 2:
                         fragmentManager.beginTransaction()
                                 .replace(R.id.container, Fragment3.newInstance())
@@ -235,6 +235,7 @@ public class NavigationDrawer extends FragmentActivity {
      * Closes the navigation drawer.
      */
     public void closeDrawer() {
+        Log.d(logTag, "Drawer closed");
         drawerLayout.closeDrawers();
     }
 }

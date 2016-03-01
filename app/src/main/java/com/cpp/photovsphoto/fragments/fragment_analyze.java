@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.cpp.photovsphoto.R;
 import com.cpp.photovsphoto.navigation.FragmentBase;
 
+import java.lang.reflect.Field;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -91,6 +93,16 @@ public class fragment_analyze extends FragmentBase {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
