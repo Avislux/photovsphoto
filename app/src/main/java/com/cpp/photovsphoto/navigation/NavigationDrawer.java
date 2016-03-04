@@ -85,7 +85,7 @@ public class NavigationDrawer extends FragmentActivity {
 
                 final Fragment fragment = new fragment_analyze();
                 Configuration.Feature item = adapter.getItem(position);
-
+//TODO:Fill out onclick drawer list
                 switch(position)
                 {
                     case 0:

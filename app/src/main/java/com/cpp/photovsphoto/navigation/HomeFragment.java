@@ -40,7 +40,7 @@ public class HomeFragment extends FragmentBase {
 
         ListView listView = (ListView) view.findViewById(android.R.id.list);
         listView.setAdapter(adapter);
-
+//TODO: Fill out onclicklist
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view,

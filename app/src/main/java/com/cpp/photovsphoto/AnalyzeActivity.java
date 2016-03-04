@@ -1,5 +1,6 @@
 package com.cpp.photovsphoto;
-
+//not in use
+/*
 import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
@@ -32,40 +33,38 @@ import com.cpp.photovsphoto.navigation.FragmentBase;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by Jonathan on 2/29/2016.
- */
+
 //originally extends FragmentBase/AppCompatActivity
 public class AnalyzeActivity extends AppCompatActivity {
     /**
      * Logging tag for this class.
-     */
+     *
     private static final String LOG_TAG = "AnalyzeActivity";
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
     /**
      * This fragment's view.
-     */
+     *
     private View mFragmentView;
 
     /**
      * Text view for showing the user identity.
-     */
+     *
     private TextView userIdTextView;
 
     /**
      * Text view for showing the user name.
-     */
+     *
     private TextView userNameTextView;
 
     /**
      * Image view for showing the user image.
-     */
+     *
     private ImageView userImageView;
 
     /*
-            @Override //TODO: Modify other code to create this activity rather inflate fragment
+            @Override /
             public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                                      final Bundle savedInstanceState) {
 
@@ -84,7 +83,7 @@ public class AnalyzeActivity extends AppCompatActivity {
                 super.onDestroyView();
 
             }
-            */
+            *
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyze);
@@ -165,4 +164,4 @@ public class AnalyzeActivity extends AppCompatActivity {
         Toast myToast = Toast.makeText(this, "Added to gallery but not really", Toast.LENGTH_LONG);
         myToast.show();
     }
-}
+}*/
