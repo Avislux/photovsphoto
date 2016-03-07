@@ -3,9 +3,10 @@ package com.cpp.photovsphoto.navigation;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import com.cpp.photovsphoto.AnalyzeActivity;
 import com.cpp.photovsphoto.R;
 import com.cpp.photovsphoto.demo.IdentityDemoFragment;
+import com.cpp.photovsphoto.fragments.fragment_PlayOnline;
+import com.cpp.photovsphoto.fragments.fragment_PlaySolo;
 import com.cpp.photovsphoto.fragments.fragment_analyze;
 
 import java.util.ArrayList;
@@ -17,9 +18,17 @@ import java.util.List;
  * Created by Jonathan on 2/24/2016.
  */
 public class Configuration {
-
+    //TODO: fill list
     private static final List<Feature> features = new ArrayList<Feature>(); //fills navigation drawer and home screen
     static{
+        addFeature("play_solo", R.mipmap.user_identity, R.string.textPlaySolo,
+                R.string.text_PlaySolo_description,
+                new navItem(R.string.text_Analyze_title, R.mipmap.user_identity,
+                        R.string.textPlaySolo, fragment_PlaySolo.class));
+        addFeature("play_online", R.mipmap.user_identity, R.string.textPlayOnline,
+                R.string.text_PlayOnline_description,
+                new navItem(R.string.text_Analyze_title, R.mipmap.user_identity,
+                        R.string.textPlayOnline, fragment_PlayOnline.class));
         addFeature("analyze", R.mipmap.user_identity, R.string.text_Analyze_title, //TODO: change mipmap images
                  R.string.text_Analyze_overview,
                 new navItem(R.string.text_Analyze_title, R.mipmap.user_identity,

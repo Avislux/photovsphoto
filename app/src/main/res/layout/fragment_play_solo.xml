@@ -1,13 +1,40 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.cpp.photovsphoto.fragments.PlaySolo">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Play Solo frag" />
 
-</FrameLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+tools:context="com.photovphoto.jonathan.photovphoto.PlaySolo">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:text="@string/textPlaySolo"
+    android:id="@+id/textTitle"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:textColor="#5770ff" />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="@string/textPlay"
+    android:id="@+id/textView"
+    android:layout_marginTop="78dp"
+    android:textColor="#0004ff"
+    android:textSize="30sp"
+    android:textIsSelectable="false"
+    android:textAlignment="center"
+    android:onClick="onClickPlay"
+    android:background="#bdbdbd"
+    android:layout_below="@+id/textTitle"
+    android:layout_centerHorizontal="true"
+    android:singleLine="true" />
+</RelativeLayout>

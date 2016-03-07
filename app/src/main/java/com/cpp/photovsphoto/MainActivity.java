@@ -33,14 +33,20 @@ import com.amazonaws.mobileconnectors.cognito.DefaultSyncCallback;
 import com.amazonaws.mobileconnectors.cognito.Record;
 import com.cpp.photovsphoto.demo.DemoConfiguration;
 import com.cpp.photovsphoto.demo.HomeDemoFragment;
+import com.cpp.photovsphoto.fragments.fragment_PlayOnline;
+import com.cpp.photovsphoto.fragments.fragment_PlaySolo;
 import com.cpp.photovsphoto.fragments.fragment_analyze;
 import com.cpp.photovsphoto.navigation.Configuration;
+import com.cpp.photovsphoto.navigation.HomeFragment;
 import com.cpp.photovsphoto.navigation.NavigationDrawer;
 import com.cpp.photovsphoto.demo.UserSettings;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, fragment_analyze.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, fragment_analyze.OnFragmentInteractionListener,
+                                                                        fragment_PlayOnline.OnFragmentInteractionListener,
+                                                                fragment_PlaySolo.OnFragmentInteractionListener
+            {
     /** Class name for log messages. */
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -219,8 +225,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() { //TODO: Fix this
         final FragmentManager fragmentManager = this.getSupportFragmentManager();
-        if (fragmentManager.findFragmentByTag(HomeDemoFragment.class.getSimpleName()) == null) {
-            final Class fragmentClass = HomeDemoFragment.class;
+        if (fragmentManager.findFragmentByTag(HomeFragment.class.getSimpleName()) == null) {
+            final Class fragmentClass = HomeFragment.class;
             // if we aren't on the home fragment, navigate home.
             final Fragment fragment = Fragment.instantiate(this, fragmentClass.getName());
 

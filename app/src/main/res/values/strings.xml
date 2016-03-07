@@ -24,11 +24,21 @@
     <string name="content_helper_error_no_app">No Viewing App exists for content type \'%s\'.</string>
 
 
-    <string name="text_Play_Solo_title">Play Solo</string>
     <string name='text_Analyze_title'>Analyze</string>
     <string name='text_Analyze_overview'>Test the image recognition.</string>
-    <string name="textGo">Go</string>
-    <string name="textAnalyzeDescription">Test the image recognition!</string>
+    <string name="textTitleText">Photo VS Photo</string>
+    <string name="textOr">or</string>
+    <!--<string name="severClientId">214434602970-lut27as1p38nptk7nkfc1rn3hqfu8i13.apps.googleusercontent.com</string>-->
+    <string name="textPlay">Play</string>
+    <string name="textPlaySolo">Play Solo</string>
+    <string name="text_PlaySolo_description">Play for a score by yourself.</string>
+    <string name="text_PlayOnline_description">Play against an opponent.</string>
+    <string name="textPlayOnline">Play Online</string>
+    <string name="textAnalyze">Analyze</string>
+    <string name="textGuest">Guest</string>
+    <string name='textAnalyzeDescription'>Test the photo analyzer!</string>
+    <string name='textGo'>Go</string>
+
     <!-- USED BY DEMO FEATURES ONLY - YOU CAN DISCARD THESE WITH THE DEMO FOLDER -->
 
     <string name="fragment_demo_instruction_overview_header">Overview</string>

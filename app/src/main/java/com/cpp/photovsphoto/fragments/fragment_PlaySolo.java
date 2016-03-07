@@ -9,16 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cpp.photovsphoto.R;
+import com.cpp.photovsphoto.navigation.FragmentBase;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link PlaySolo.OnFragmentInteractionListener} interface
+ * {@link fragment_PlaySolo.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link PlaySolo#newInstance} factory method to
+ * Use the {@link fragment_PlaySolo#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PlaySolo extends Fragment {
+public class fragment_PlaySolo extends FragmentBase {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +31,7 @@ public class PlaySolo extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public PlaySolo() {
+    public fragment_PlaySolo() {
         // Required empty public constructor
     }
 
@@ -43,8 +44,8 @@ public class PlaySolo extends Fragment {
      * @return A new instance of fragment PlaySolo.
      */
     // TODO: Rename and change types and number of parameters
-    public static PlaySolo newInstance(String param1, String param2) {
-        PlaySolo fragment = new PlaySolo();
+    public static fragment_PlaySolo newInstance(String param1, String param2) {
+        fragment_PlaySolo fragment = new fragment_PlaySolo();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

@@ -25,6 +25,8 @@ import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.amazonaws.mobile.user.IdentityProvider;
 import com.cpp.photovsphoto.R;
+import com.cpp.photovsphoto.fragments.fragment_PlayOnline;
+import com.cpp.photovsphoto.fragments.fragment_PlaySolo;
 import com.cpp.photovsphoto.fragments.fragment_analyze;
 import com.cpp.photovsphoto.navigation.Configuration;
 
@@ -83,7 +85,7 @@ public class NavigationDrawer extends FragmentActivity {
             public void onItemClick(final AdapterView<?> parent, final View view,
                                     final int position, final long id) {//when item is clicked, open new activity and close drawer
 
-                final Fragment fragment = new fragment_analyze();
+               // final Fragment fragment = new fragment_analyze();
                 Configuration.Feature item = adapter.getItem(position);
 //TODO:Fill out onclick drawer list
                 switch(position)
@@ -94,18 +96,29 @@ public class NavigationDrawer extends FragmentActivity {
                         break;
 
                     case 1:
-                        Log.d(logTag, "Case 1");
+                        Log.d(logTag, "Case 1"); //playsolo
                         activity.getSupportFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.main_fragment_container, fragment, item.name)
+                                .replace(R.id.main_fragment_container, new fragment_PlaySolo(), item.name)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .commit();
-                        /*
+
                     case 2:
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.container, Fragment3.newInstance())
+                        Log.d(logTag, "Case 2"); //playonline
+                        activity.getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.main_fragment_container, new fragment_PlayOnline(), item.name)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .commit();
-                        break;*/
+                        break;/**/
+                    case 3:
+                        Log.d(logTag, "Case 3");//analyze
+                        activity.getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.main_fragment_container, new fragment_analyze(), item.name)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit();
+                        break;
                 }
                 /*
                 final Fragment fragment = InstructionFragment.newInstance(item.name);
