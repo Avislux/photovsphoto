@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cpp.photovsphoto.R;
+import com.cpp.photovsphoto.fragments.fragment_PlayOnline;
+import com.cpp.photovsphoto.fragments.fragment_PlaySolo;
 import com.cpp.photovsphoto.fragments.fragment_analyze;
 import com.cpp.photovsphoto.navigation.Configuration;
 import com.cpp.photovsphoto.navigation.FragmentBase;
 //import com.cpp.photovsphoto.navigation.InstructionFragment;
 
 public class HomeFragment extends FragmentBase {
-
+    private String logTag = "HomeMenu: ";
     @Override //TODO: Fix back button showing the demo stuff
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
@@ -40,7 +43,7 @@ public class HomeFragment extends FragmentBase {
 
         ListView listView = (ListView) view.findViewById(android.R.id.list);
         listView.setAdapter(adapter);
-//TODO: Fill out onclicklist
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view,
@@ -49,13 +52,13 @@ public class HomeFragment extends FragmentBase {
                 final AppCompatActivity activity = (AppCompatActivity) getActivity();
                 if (activity != null) {
 
-                  //  final Fragment fragment = InstructionFragment.newInstance(item.name);
+                    //  final Fragment fragment = InstructionFragment.newInstance(item.name);
                     final Fragment fragment = new fragment_analyze();
                     activity.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_fragment_container, fragment, item.name)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit();
+                            .beginTransaction()
+                            .replace(R.id.main_fragment_container, fragment, item.name)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit();
 
                     // Set the title for the fragment.
                     final ActionBar actionBar = activity.getSupportActionBar();
@@ -63,6 +66,36 @@ public class HomeFragment extends FragmentBase {
                         actionBar.setTitle(item.titleResId);
                     }
                 }
+
+                switch(position) {
+
+
+                    case 0:
+                        Log.d(logTag, "Case 1"); //playsolo
+                        activity.getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.main_fragment_container, new fragment_PlaySolo(), item.name)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit();
+
+                    case 1:
+                        Log.d(logTag, "Case 2"); //playonline
+                        activity.getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.main_fragment_container, new fragment_PlayOnline(), item.name)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit();
+                        break;/**/
+                    case 2:
+                        Log.d(logTag, "Case 3");//analyze
+                        activity.getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.main_fragment_container, new fragment_analyze(), item.name)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit();
+                        break;
+                }
+
             }
         });
     }
