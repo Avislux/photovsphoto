@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onBackPressed() { //TODO: Fix this
+    public void onBackPressed() {
         final FragmentManager fragmentManager = this.getSupportFragmentManager();
         if (fragmentManager.findFragmentByTag(HomeFragment.class.getSimpleName()) == null) {
             final Class fragmentClass = HomeFragment.class;
