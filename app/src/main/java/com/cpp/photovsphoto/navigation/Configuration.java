@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Jonathan on 2/24/2016.
  */
 public class Configuration {
-    //TODO: fill list
+
     private static final List<Feature> features = new ArrayList<Feature>(); //fills navigation drawer and home screen
     static{
         addFeature("play_solo", R.mipmap.user_identity, R.string.textPlaySolo,

@@ -26,7 +26,7 @@ import com.cpp.photovsphoto.navigation.FragmentBase;
 
 public class HomeFragment extends FragmentBase {
     private String logTag = "HomeMenu: ";
-    @Override //TODO: Fix back button showing the demo stuff
+    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
 
