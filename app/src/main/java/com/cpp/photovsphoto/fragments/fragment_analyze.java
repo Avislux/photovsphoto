@@ -220,7 +220,7 @@ public class fragment_analyze extends FragmentBase {
 
     public void onClickUpload() {
         //upload to aws
-        //TODO: Find and copy code from userfilesdemofragment
+        //TODO: Find and copy code from userfilesdemofragment, userfilesbrowserfragment
        // PutObjectRequest por = new PutObjectRequest( Constants.getPictureBucket(), Constants.PICTURE_NAME, new java.io.File( filePath) );
         //s3Client.putObject( por );
     }
