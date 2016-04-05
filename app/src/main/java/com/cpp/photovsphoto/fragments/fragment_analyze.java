@@ -1,6 +1,7 @@
 package com.cpp.photovsphoto.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,9 +19,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amazonaws.mobile.content.ContentItem;
+import com.amazonaws.mobile.content.ContentProgressListener;
+import com.amazonaws.mobile.content.UserFileManager;
+import com.amazonaws.mobile.util.ImageSelectorUtils;
 import com.amazonaws.services.s3.internal.Constants;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.cpp.photovsphoto.R;
+import com.cpp.photovsphoto.demo.content.ContentListItem;
 import com.cpp.photovsphoto.navigation.FragmentBase;
 
 import java.io.File;
@@ -217,12 +223,50 @@ public class fragment_analyze extends FragmentBase {
     public void onClickThumbnail(View v) {
         //expands iamge
     }
-
+    private UserFileManager userFileManager;
     public void onClickUpload() {
         //upload to aws
-        //TODO: Find and copy code from userfilesdemofragment
+        //TODO: Find and copy code from userfilesdemofragment, userfilesbrowserfragment
        // PutObjectRequest por = new PutObjectRequest( Constants.getPictureBucket(), Constants.PICTURE_NAME, new java.io.File( filePath) );
         //s3Client.putObject( por );
+        final Uri uri = data.getData();
+        Log.d(LOG_TAG, "data uri: " + uri);
+
+        final String path = ImageSelectorUtils.getFilePathFromUri(getActivity(), uri);
+        Log.d(LOG_TAG, "file path: " + path);
+        final ProgressDialog dialog = new ProgressDialog(getActivity());
+        dialog.setTitle(R.string.content_progress_dialog_title_wait);
+        dialog.setMessage(
+                getString(R.string.user_files_browser_progress_dialog_message_upload_file,
+                        path));
+        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        dialog.setMax((int) new File(path).length());
+        dialog.setCancelable(false);
+        dialog.show();
+
+        final File file = new File(path);
+        userFileManager.uploadContent(file, currentPath + file.getName(), new ContentProgressListener() {
+            @Override
+            public void onSuccess(final ContentItem contentItem) {
+                contentListItems.add(new ContentListItem(contentItem));
+                contentListItems.sort(ContentListItem.contentAlphebeticalComparator);
+                contentListItems.notifyDataSetChanged();
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onProgressUpdate(final String fileName, final boolean isWaiting,
+                                         final long bytesCurrent, final long bytesTotal) {
+                dialog.setProgress((int) bytesCurrent);
+            }
+
+            @Override
+            public void onError(final String fileName, final Exception ex) {
+                dialog.dismiss();
+                showError(R.string.user_files_browser_error_message_upload_file,
+                        ex.getMessage());
+            }
+        });
     }
 
     private void galleryAddPic() {
