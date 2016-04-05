@@ -1,6 +1,7 @@
 package com.cpp.photovsphoto.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import com.amazonaws.services.s3.internal.Constants;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.cpp.photovsphoto.R;
 import com.cpp.photovsphoto.demo.content.ContentListItem;
+import com.cpp.photovsphoto.demo.content.ContentListViewAdapter;
 import com.cpp.photovsphoto.navigation.FragmentBase;
 
 import java.io.File;
@@ -189,6 +191,8 @@ public class fragment_analyze extends FragmentBase {
         Log.d("AnalyzeFragment: ", "onActivityResult got called");
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             Log.d("AnalyzeFragment: ", "got into the if block");
+            String toastText = "onActivityResult called";
+            Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_LONG);
             Intent takePictureIntent = getActivity().getIntent();
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
@@ -224,15 +228,14 @@ public class fragment_analyze extends FragmentBase {
         //expands iamge
     }
     private UserFileManager userFileManager;
+    private ContentListViewAdapter contentListItems;
     public void onClickUpload() {
         //upload to aws
-        //TODO: Find and copy code from userfilesdemofragment, userfilesbrowserfragment
+        //TODO: Fix this
        // PutObjectRequest por = new PutObjectRequest( Constants.getPictureBucket(), Constants.PICTURE_NAME, new java.io.File( filePath) );
         //s3Client.putObject( por );
-        final Uri uri = data.getData();
-        Log.d(LOG_TAG, "data uri: " + uri);
 
-        final String path = ImageSelectorUtils.getFilePathFromUri(getActivity(), uri);
+        String path = mCurrentPhotoPath;
         Log.d(LOG_TAG, "file path: " + path);
         final ProgressDialog dialog = new ProgressDialog(getActivity());
         dialog.setTitle(R.string.content_progress_dialog_title_wait);
@@ -240,12 +243,12 @@ public class fragment_analyze extends FragmentBase {
                 getString(R.string.user_files_browser_progress_dialog_message_upload_file,
                         path));
         dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        dialog.setMax((int) new File(path).length());
+       // dialog.setMax((int) new File(path).length());
         dialog.setCancelable(false);
         dialog.show();
 
-        final File file = new File(path);
-        userFileManager.uploadContent(file, currentPath + file.getName(), new ContentProgressListener() {
+        File file = new File(path); //TODO: null pointers here
+        userFileManager.uploadContent(file, file.getName(), new ContentProgressListener() {
             @Override
             public void onSuccess(final ContentItem contentItem) {
                 contentListItems.add(new ContentListItem(contentItem));
@@ -278,5 +281,11 @@ public class fragment_analyze extends FragmentBase {
         Toast myToast = Toast.makeText(getActivity(), "Added to gallery but not really", Toast.LENGTH_LONG);
         myToast.show();
 
+    }
+    private void showError(final int resId, Object... args) {
+        new AlertDialog.Builder(getActivity()).setIcon(android.R.drawable.ic_dialog_alert)
+                .setMessage(getString(resId, (Object[]) args))
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
     }
 }
