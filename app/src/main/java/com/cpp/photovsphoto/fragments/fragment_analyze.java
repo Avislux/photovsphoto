@@ -18,9 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amazonaws.mobile.content.ContentItem;
+import com.amazonaws.mobile.content.ContentProgressListener;
 import com.amazonaws.services.s3.internal.Constants;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.cpp.photovsphoto.R;
+import com.cpp.photovsphoto.demo.content.ContentListItem;
 import com.cpp.photovsphoto.navigation.FragmentBase;
 
 import java.io.File;
@@ -223,6 +226,28 @@ public class fragment_analyze extends FragmentBase {
         //TODO: Find and copy code from userfilesdemofragment, userfilesbrowserfragment
        // PutObjectRequest por = new PutObjectRequest( Constants.getPictureBucket(), Constants.PICTURE_NAME, new java.io.File( filePath) );
         //s3Client.putObject( por );
+        userFileManager.uploadContent(file, currentPath + file.getName(), new ContentProgressListener() {
+            @Override
+            public void onSuccess(final ContentItem contentItem) {
+                contentListItems.add(new ContentListItem(contentItem));
+                contentListItems.sort(ContentListItem.contentAlphebeticalComparator);
+                contentListItems.notifyDataSetChanged();
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onProgressUpdate(final String fileName, final boolean isWaiting,
+                                         final long bytesCurrent, final long bytesTotal) {
+                dialog.setProgress((int) bytesCurrent);
+            }
+
+            @Override
+            public void onError(final String fileName, final Exception ex) {
+                dialog.dismiss();
+                showError(R.string.user_files_browser_error_message_upload_file,
+                        ex.getMessage());
+            }
+        });
     }
 
     private void galleryAddPic() {

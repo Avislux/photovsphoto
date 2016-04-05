@@ -17,11 +17,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cpp.photovsphoto.R;
-
+// This isn't actually necessary. Up for deletion
 /**
  * A fragment that shows a brief instruction of demos.
  */
-//TODO: This isn't actually necessary.
+
     /*
 public class InstructionFragment extends FragmentBase {
 
