@@ -204,7 +204,7 @@ public class fragment_analyze extends FragmentBase {
 
     String mCurrentPhotoPath;
 
-    private File createImageFile() throws IOException {
+    private File createImageFile() throws IOException { // this gets called when the camera app opens ;creates temporary file
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -217,10 +217,11 @@ public class fragment_analyze extends FragmentBase {
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        mCurrentPhotoPath = image.getAbsolutePath();
         String toastText = "Image saved " + image.getAbsolutePath();
         Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_LONG);
         myToast.show();
+        Log.d(LOG_TAG, mCurrentPhotoPath);
         return image;
     }
 
@@ -278,7 +279,8 @@ public class fragment_analyze extends FragmentBase {
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         getActivity().sendBroadcast(mediaScanIntent);
-        Toast myToast = Toast.makeText(getActivity(), "Added to gallery but not really", Toast.LENGTH_LONG);
+        Log.d(LOG_TAG, "galleryaddpic "+ contentUri.toString());
+        Toast myToast = Toast.makeText(getActivity(), "galleryaddpic called", Toast.LENGTH_LONG);
         myToast.show();
 
     }

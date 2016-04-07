@@ -51,7 +51,7 @@
     <string name='textSearchOpponent'>Searching for opponent.</string>
     <string name='textReady'>Ready?</string>
 
-    <!-- FOR SCORING -->
+    <!-- FOR SCORING --><!--JT: really? you could just display an integer -->
     <string name='text0'>0</string>
     <string name='text1'>1</string>
     <string name='text2'>2</string>
