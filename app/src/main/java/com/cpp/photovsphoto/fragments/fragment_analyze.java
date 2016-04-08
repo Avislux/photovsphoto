@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ import java.util.Date;
  * Use the {@link fragment_analyze#newInstance} factory method to
  * create an instance of this fragment.
  */
+
 public class fragment_analyze extends FragmentBase {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,7 +54,8 @@ public class fragment_analyze extends FragmentBase {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    public static final int MEDIA_TYPE_IMAGE = 1;
+    public static final int MEDIA_TYPE_VIDEO = 2;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -170,41 +173,47 @@ public class fragment_analyze extends FragmentBase {
         File photoFile = null;
         try {
             photoFile = createImageFile();
-
             galleryAddPic();
+
         } catch (IOException ex) {
             // Error occurred while creating the File
             ex.printStackTrace();
-        }
-        if (photoFile != null) {
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
         }
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             Log.d("AnalyzeFragment: ", "startActivityforResult got called");
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 
         }
+        if (photoFile != null) {
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile)); //adds extras to intent data for getExtras
+
+        }
+
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) { //TODO: This bit doesn't work
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("AnalyzeFragment: ", "onActivityResult got called");
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             Log.d("AnalyzeFragment: ", "got into the if block");
             String toastText = "onActivityResult called";
-            Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_LONG);
+           // Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_LONG);
+            //myToast.show();
             Intent takePictureIntent = getActivity().getIntent();
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+            //File image = (File) extras.get("data");
             ImageView imageView = (ImageView) getView().findViewById(R.id.imageViewPicture);
             imageView.setImageBitmap(imageBitmap); //set thumbnail to photo
-
+            //String toastText2 = "Image saved " + image.getAbsolutePath();
+            //Toast myToast2 = Toast.makeText(getActivity(), toastText2, Toast.LENGTH_LONG);
+            //myToast2.show();
         }
     }
 
     String mCurrentPhotoPath;
 
-    private File createImageFile() throws IOException { // this gets called when the camera app opens ;creates temporary file
+    private File createImageFile() throws IOException { // this gets called when the camera app opens ;root/sdcard/pictures
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -218,7 +227,7 @@ public class fragment_analyze extends FragmentBase {
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
-        String toastText = "Image saved " + image.getAbsolutePath();
+        String toastText = "Image created " + image.getAbsolutePath();
         Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_LONG);
         myToast.show();
         Log.d(LOG_TAG, mCurrentPhotoPath);
@@ -273,7 +282,7 @@ public class fragment_analyze extends FragmentBase {
         });
     }
 
-    private void galleryAddPic() {
+    private void galleryAddPic() { //TODO:Verify add to gallery
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(mCurrentPhotoPath);
         Uri contentUri = Uri.fromFile(f);
@@ -290,4 +299,5 @@ public class fragment_analyze extends FragmentBase {
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
     }
+
 }
