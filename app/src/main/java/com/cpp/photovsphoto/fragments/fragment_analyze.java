@@ -54,12 +54,11 @@ public class fragment_analyze extends FragmentBase {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public static final int MEDIA_TYPE_IMAGE = 1;
-    public static final int MEDIA_TYPE_VIDEO = 2;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    String mCurrentPhotoPath;
     private OnFragmentInteractionListener mListener;
 
     public fragment_analyze() {
@@ -213,7 +212,7 @@ public class fragment_analyze extends FragmentBase {
         }
     }
 
-    String mCurrentPhotoPath;
+
 
     private File createImageFile() throws IOException { // this gets called when the camera app opens ;root/sdcard/pictures
         // Create an image file name
@@ -244,8 +243,6 @@ public class fragment_analyze extends FragmentBase {
     public void onClickUpload() {
         //upload to aws
         //TODO: Fix this
-       // PutObjectRequest por = new PutObjectRequest( Constants.getPictureBucket(), Constants.PICTURE_NAME, new java.io.File( filePath) );
-        //s3Client.putObject( por );
 
         String path = mCurrentPhotoPath;
         Log.d(LOG_TAG, "onclickupload file path: " + path);
