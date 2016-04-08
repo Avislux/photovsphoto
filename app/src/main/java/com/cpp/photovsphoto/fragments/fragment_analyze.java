@@ -186,7 +186,9 @@ public class fragment_analyze extends FragmentBase {
         }
         if (photoFile != null) {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile)); //adds extras to intent data for getExtras
-
+            String uri = photoFile.getAbsolutePath();
+            takePictureIntent.putExtra("fileuri", uri );
+            Toast.makeText(getActivity(), uri, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -202,12 +204,12 @@ public class fragment_analyze extends FragmentBase {
             Intent takePictureIntent = getActivity().getIntent();
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            //File image = (File) extras.get("data");
+            //String imageUri = extras.getString("fileuri","poop" ); //doesn't retrieve string correctly
             ImageView imageView = (ImageView) getView().findViewById(R.id.imageViewPicture);
             imageView.setImageBitmap(imageBitmap); //set thumbnail to photo
-            //String toastText2 = "Image saved " + image.getAbsolutePath();
-            //Toast myToast2 = Toast.makeText(getActivity(), toastText2, Toast.LENGTH_LONG);
-            //myToast2.show();
+            String toastText2 = "Image saved " + mCurrentPhotoPath;
+            Toast myToast2 = Toast.makeText(getActivity(), toastText2, Toast.LENGTH_SHORT);
+            myToast2.show();
         }
     }
 
@@ -228,7 +230,7 @@ public class fragment_analyze extends FragmentBase {
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         String toastText = "Image created " + image.getAbsolutePath();
-        Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_LONG);
+        Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_SHORT);
         myToast.show();
         Log.d(LOG_TAG, mCurrentPhotoPath);
         return image;
@@ -246,7 +248,7 @@ public class fragment_analyze extends FragmentBase {
         //s3Client.putObject( por );
 
         String path = mCurrentPhotoPath;
-        Log.d(LOG_TAG, "file path: " + path);
+        Log.d(LOG_TAG, "onclickupload file path: " + path);
         final ProgressDialog dialog = new ProgressDialog(getActivity());
         dialog.setTitle(R.string.content_progress_dialog_title_wait);
         dialog.setMessage(
@@ -289,7 +291,7 @@ public class fragment_analyze extends FragmentBase {
         mediaScanIntent.setData(contentUri);
         getActivity().sendBroadcast(mediaScanIntent);
         Log.d(LOG_TAG, "galleryaddpic "+ contentUri.toString());
-        Toast myToast = Toast.makeText(getActivity(), "galleryaddpic called", Toast.LENGTH_LONG);
+        Toast myToast = Toast.makeText(getActivity(), "galleryaddpic called", Toast.LENGTH_SHORT);
         myToast.show();
 
     }
