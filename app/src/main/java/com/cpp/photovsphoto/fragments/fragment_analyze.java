@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,18 +22,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.content.ContentItem;
 import com.amazonaws.mobile.content.ContentProgressListener;
+import com.amazonaws.mobile.content.TransferHelper;
 import com.amazonaws.mobile.content.UserFileManager;
 import com.amazonaws.mobile.util.ImageSelectorUtils;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.internal.Constants;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.mobile.AWSConfiguration;
 import com.cpp.photovsphoto.R;
+import com.cpp.photovsphoto.demo.UserFilesBrowserFragment;
 import com.cpp.photovsphoto.demo.content.ContentListItem;
 import com.cpp.photovsphoto.demo.content.ContentListViewAdapter;
 import com.cpp.photovsphoto.navigation.FragmentBase;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -59,8 +71,19 @@ public class fragment_analyze extends FragmentBase {
     private String mParam1;
     private String mParam2;
     String mCurrentPhotoPath;
+
+    private UserFileManager userFileManager;
+    private String bucket;
+    private String prefix;
+    public static final String BUNDLE_ARGS_S3_BUCKET = "bucket";
+    public static final String BUNDLE_ARGS_S3_PREFIX = "prefix";
+    //protected final TransferHelper transferHelper;
+
     private OnFragmentInteractionListener mListener;
 
+    //AmazonS3 s3 = new AmazonS3Client(credentialsProvider);
+
+    //s3.setRegion(Region.getRegion(Regions.MY_BUCKET_REGION));
     public fragment_analyze() {
         // Required empty public constructor
     }
@@ -90,7 +113,30 @@ public class fragment_analyze extends FragmentBase {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        //transferHelper = S3TransferHelper.build(context, s3Client, bucket,
+          //      this.s3DirPrefix, localTransferPath, localContentCache);
 
+
+        bucket = AWSConfiguration.AMAZON_S3_USER_FILES_BUCKET;
+        prefix = "prefix";
+        //final ProgressDialog dialog = getProgressDialog(R.string.content_progress_dialog_message_load_local_content);
+        AWSMobileClient.defaultMobileClient()
+                .createUserFileManager(bucket, "public",
+                        new UserFileManager.BuilderResultHandler() {
+                            @Override
+                            public void onComplete(final UserFileManager userFileManager) {
+                                if (!isAdded()) {
+                                    userFileManager.destroy();
+                                    return;
+                                }
+
+                                fragment_analyze.this.userFileManager = userFileManager;
+                                //createContentList(getView(), userFileManager);
+                                //userFileManager.setContentRemovedListener(contentListItems);
+                                //dialog.dismiss();
+                                //refreshContent(currentPath);
+                            }
+                        });
     }
     Button goButton;
     Button uploadButton;
@@ -184,10 +230,11 @@ public class fragment_analyze extends FragmentBase {
 
         }
         if (photoFile != null) {
+
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile)); //adds extras to intent data for getExtras
             String uri = photoFile.getAbsolutePath();
             takePictureIntent.putExtra("fileuri", uri );
-            Toast.makeText(getActivity(), uri, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "file should be saved", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -200,15 +247,34 @@ public class fragment_analyze extends FragmentBase {
             String toastText = "onActivityResult called";
            // Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_LONG);
             //myToast.show();
+
             Intent takePictureIntent = getActivity().getIntent();
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+
             //String imageUri = extras.getString("fileuri","poop" ); //doesn't retrieve string correctly
-            ImageView imageView = (ImageView) getView().findViewById(R.id.imageViewPicture);
+            ImageView imageView = (ImageView) getView().findViewById(R.id.imageViewPicture); //set imageview thumbnail
             imageView.setImageBitmap(imageBitmap); //set thumbnail to photo
-            String toastText2 = "Image saved " + mCurrentPhotoPath;
+            FileOutputStream out = null;
+            try { //TODO: there is some useless code somewhere now that this is working. Not working on phone. 
+                out = new FileOutputStream(mCurrentPhotoPath);
+                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+                // PNG is a lossless format, the compression factor (100) is ignored
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            String toastText2 = "Image saved " + mCurrentPhotoPath; //doesn't work on phone
             Toast myToast2 = Toast.makeText(getActivity(), toastText2, Toast.LENGTH_SHORT);
             myToast2.show();
+            //TODO: Delete files after use?
         }
     }
 
@@ -238,11 +304,11 @@ public class fragment_analyze extends FragmentBase {
     public void onClickThumbnail(View v) {
         //expands iamge
     }
-    private UserFileManager userFileManager;
-    private ContentListViewAdapter contentListItems;
+
+
     public void onClickUpload() {
         //upload to aws
-        //TODO: Fix this
+
 
         String path = mCurrentPhotoPath;
         Log.d(LOG_TAG, "onclickupload file path: " + path);
@@ -252,17 +318,16 @@ public class fragment_analyze extends FragmentBase {
                 getString(R.string.user_files_browser_progress_dialog_message_upload_file,
                         path));
         dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-       // dialog.setMax((int) new File(path).length());
+
         dialog.setCancelable(false);
         dialog.show();
 
-        File file = new File(path); //TODO: null pointers here
+        File file = new File(path);
+
+
         userFileManager.uploadContent(file, file.getName(), new ContentProgressListener() {
             @Override
             public void onSuccess(final ContentItem contentItem) {
-                contentListItems.add(new ContentListItem(contentItem));
-                contentListItems.sort(ContentListItem.contentAlphebeticalComparator);
-                contentListItems.notifyDataSetChanged();
                 dialog.dismiss();
             }
 
@@ -279,6 +344,7 @@ public class fragment_analyze extends FragmentBase {
                         ex.getMessage());
             }
         });
+
     }
 
     private void galleryAddPic() { //TODO:Verify add to gallery
