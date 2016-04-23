@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/textTopic"
+        android:id="@+id/textViewTopics"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textOffice"
+        android:id="@+id/buttonOffice"
+        android:layout_marginTop="53dp"
+        android:layout_below="@+id/textViewTopics"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="47dp"
+        android:layout_marginStart="47dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textKitchen"
+        android:id="@+id/buttonKitchen"
+        android:layout_alignTop="@+id/buttonOffice"
+        android:layout_toRightOf="@+id/textViewTopics"
+        android:layout_toEndOf="@+id/textViewTopics" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textFood"
+        android:id="@+id/buttonFood"
+        android:layout_below="@+id/buttonOffice"
+        android:layout_alignLeft="@+id/buttonOffice"
+        android:layout_alignStart="@+id/buttonOffice"
+        android:layout_marginTop="53dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textPetItems"
+        android:id="@+id/buttonPetItems"
+        android:layout_alignTop="@+id/buttonFood"
+        android:layout_alignRight="@+id/buttonKitchen"
+        android:layout_alignEnd="@+id/buttonKitchen" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textBCGames"
+        android:id="@+id/buttonBoardCardGames"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/buttonFood"
+        android:layout_alignStart="@+id/buttonFood" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textDrinks"
+        android:id="@+id/buttonDrinks"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/buttonKitchen"
+        android:layout_alignEnd="@+id/buttonKitchen" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textSides"
+        android:id="@+id/buttonSides"
+        android:layout_below="@+id/buttonBoardCardGames"
+        android:layout_alignLeft="@+id/buttonBoardCardGames"
+        android:layout_alignStart="@+id/buttonBoardCardGames"
+        android:layout_marginTop="43dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textDesserts"
+        android:id="@+id/buttonDesserts"
+        android:layout_alignTop="@+id/buttonSides"
+        android:layout_alignRight="@+id/buttonDrinks"
+        android:layout_alignEnd="@+id/buttonDrinks" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textRoadTrip"
+        android:id="@+id/buttonRoadTrip"
+        android:layout_below="@+id/buttonSides"
+        android:layout_alignLeft="@+id/buttonSides"
+        android:layout_alignStart="@+id/buttonSides"
+        android:layout_marginTop="51dp" />
+</RelativeLayout>
