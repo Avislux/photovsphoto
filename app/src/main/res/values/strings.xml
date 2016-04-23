@@ -50,8 +50,8 @@
     <string name='textRoadTrip'>Road Trip</string>
     <string name='textSearchOpponent'>Searching for opponent</string>
     <string name='textReady'>Ready?</string>
-    <string name='textWin'>You win!</string>
-    <string name='textLose'>You lose.</string>
+    <string name='textWin'>You win</string>
+    <string name='textLose'>You lose</string>
 
     <!-- FOR SCORING --><!--JT: really? you could just display an integer -->
     <!--B: Sorry, I am eliminating it. -->
