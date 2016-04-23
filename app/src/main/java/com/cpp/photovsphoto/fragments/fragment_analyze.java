@@ -70,7 +70,6 @@ public class fragment_analyze extends FragmentBase {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    String mCurrentPhotoPath;
 
     private UserFileManager userFileManager;
     private String bucket;
@@ -150,7 +149,7 @@ public class fragment_analyze extends FragmentBase {
         goButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent();
+                dispatchTakePictureIntent(); //opencamera app when clicked (1)
             }
         });
         uploadButton.setOnClickListener(new View.OnClickListener(){
@@ -210,96 +209,94 @@ public class fragment_analyze extends FragmentBase {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+    static String gFileName;
+    //String mCurrentPhotoPath;
+    private Uri globalUri;
+    //private Uri fileUri;
+    private void dispatchTakePictureIntent() { //opens camera app (2)
+        Uri tempfileUri;
 
-
-
-    private void dispatchTakePictureIntent() { //opens camera app
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File photoFile = null;
-        try {
-            photoFile = createImageFile();
-            galleryAddPic();
+        tempfileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
 
-        } catch (IOException ex) {
-            // Error occurred while creating the File
-            ex.printStackTrace();
-        }
+        String tempfileUriString = tempfileUri.getPath();
+        globalUri = tempfileUri;
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, "data"); //key, value
+        //takePictureIntent.putExtra("temporaryFileUri",tempfileUriString); //nope not working
+
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             Log.d("AnalyzeFragment: ", "startActivityforResult got called");
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 
         }
-        if (photoFile != null) {
+       // if (photoFile != null) {//  }
 
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile)); //adds extras to intent data for getExtras
-            String uri = photoFile.getAbsolutePath();
-            takePictureIntent.putExtra("fileuri", uri );
-            //Toast.makeText(getActivity(), "file should be saved", Toast.LENGTH_SHORT).show();
-        }
 
+
+
+        Toast.makeText(getActivity(), "temp file " + tempfileUri, Toast.LENGTH_SHORT).show();
+        Log.d("AnalyzeFragment: ", "dispatchtakepictureintent " + tempfileUriString);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) { //(3)
         Log.d("AnalyzeFragment: ", "onActivityResult got called");
+        Uri tempUri;
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             Log.d("AnalyzeFragment: ", "got into the if block");
-            String toastText = "onActivityResult called";
-           // Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_LONG);
-            //myToast.show();
+
 
             Intent takePictureIntent = getActivity().getIntent();
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-            //String imageUri = extras.getString("fileuri","poop" ); //doesn't retrieve string correctly
+            //String tempstring = getActivity().getIntent().getStringExtra("temporaryFileUri");
+           // String tempstring = extras.getString("temporaryFileUri");
+            //Log.d("AnalyzeFragment: ", "path " + tempstring);
+            //tempUri = Uri.parse(extras.getString("temporaryFileUri"));
+           // tempUri = data.getData(); //OMFG
+            tempUri = globalUri;
+            //mCurrentPhotoPath = fileUri.toString();
+            String toastText = "onactivityresult: " + tempUri;
+            Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_LONG);
+            myToast.show();
+            galleryAddPic();
             ImageView imageView = (ImageView) getView().findViewById(R.id.imageViewPicture); //set imageview thumbnail
             imageView.setImageBitmap(imageBitmap); //set thumbnail to photo
+            File image = new File(tempUri.toString());
+
+            Log.d("AnalyzeFragment: ", "path " + tempUri);
+            
             FileOutputStream out = null;
-            try { //TODO: there is some useless code somewhere now that this is working. Not working on phone. 
-                out = new FileOutputStream(mCurrentPhotoPath);
-                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+
+            try {
+                out = new FileOutputStream(tempUri.toString());
+                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                //out.write(imageBitmap);// bmp is your Bitmap instance
                 // PNG is a lossless format, the compression factor (100) is ignored
+                Log.d("AnalyzeFragment: ","image should be saved, compressed to" + tempUri);
+            } catch (FileNotFoundException e) {
+                Log.d("AnalyzeFragment: ", "File not found: " + e.getMessage());
             } catch (Exception e) {
+                Log.d("AnalyzeFragment: ", "Error accessing file: " + e.getMessage());
                 e.printStackTrace();
             } finally {
                 try {
                     if (out != null) {
-                        out.close();
+                        out.close();Log.d("AnalyzeFragment: ", "file close");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            String toastText2 = "Image saved " + mCurrentPhotoPath; //doesn't work on phone
-            Toast myToast2 = Toast.makeText(getActivity(), toastText2, Toast.LENGTH_SHORT);
-            myToast2.show();
+            Log.d("AnalyzeFragment: ", "HIHIHIHIH");
+            Log.d("AnalyzeFragment: ", tempUri.toString()  + gFileName);
             //TODO: Delete files after use?
         }
+
     }
 
 
 
-    private File createImageFile() throws IOException { // this gets called when the camera app opens ;root/sdcard/pictures
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  // prefix
-                ".jpg",         // suffix
-                storageDir      // directory
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        String toastText = "Image created " + image.getAbsolutePath();
-        Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_SHORT);
-        myToast.show();
-        Log.d(LOG_TAG, mCurrentPhotoPath);
-        return image;
-    }
 
     public void onClickThumbnail(View v) {
         //expands iamge
@@ -308,9 +305,9 @@ public class fragment_analyze extends FragmentBase {
 
     public void onClickUpload() {
         //upload to aws
+        //File finalFile = new File(getRealPathFromURI(fileUri));
 
-
-        String path = mCurrentPhotoPath;
+        String path = globalUri.toString();
         Log.d(LOG_TAG, "onclickupload file path: " + path);
         final ProgressDialog dialog = new ProgressDialog(getActivity());
         dialog.setTitle(R.string.content_progress_dialog_title_wait);
@@ -349,13 +346,13 @@ public class fragment_analyze extends FragmentBase {
 
     private void galleryAddPic() { //TODO:Verify add to gallery
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
+        File f = new File(globalUri.toString());
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         getActivity().sendBroadcast(mediaScanIntent);
         Log.d(LOG_TAG, "galleryaddpic "+ contentUri.toString());
-        Toast myToast = Toast.makeText(getActivity(), "galleryaddpic called", Toast.LENGTH_SHORT);
-        myToast.show();
+        //Toast myToast = Toast.makeText(getActivity(), "galleryaddpic called", Toast.LENGTH_SHORT);
+        //myToast.show();
 
     }
     private void showError(final int resId, Object... args) {
@@ -363,6 +360,68 @@ public class fragment_analyze extends FragmentBase {
                 .setMessage(getString(resId, (Object[]) args))
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
+    }
+    public static final int MEDIA_TYPE_IMAGE = 1;
+    public static final int MEDIA_TYPE_VIDEO = 2;
+
+    /** Create a file Uri for saving an image or video */
+    private static Uri getOutputMediaFileUri(int type){
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    /** Create a File for saving an image or video */
+    private static File getOutputMediaFile(int type){
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "MyCameraApp");
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                Log.d("MyCameraApp", "failed to create directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        gFileName = "IMG_"+ timeStamp + ".jpg";
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE){
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                    "IMG_"+ timeStamp + ".jpg");
+        } else if(type == MEDIA_TYPE_VIDEO) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                    "VID_"+ timeStamp + ".mp4");
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
+    private File createImageFile() throws IOException { // this gets called when the camera app opens ;root/sdcard/pictures
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  // prefix
+                ".jpg",         // suffix
+                storageDir      // directory
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        //mCurrentPhotoPath = image.getAbsolutePath();
+        String toastText = "Image created " + image.getAbsolutePath();
+        Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_SHORT);
+        myToast.show();
+        //Log.d(LOG_TAG, mCurrentPhotoPath);
+        return image;
     }
 
 }
