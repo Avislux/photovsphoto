@@ -38,7 +38,7 @@
     <string name="textGuest">Guest</string>
     <string name='textAnalyzeDescription'>Test the photo analyzer!</string>
     <string name='textGo'>Go</string>
-    <string name='textTopic'>Choose a topic.</string>
+    <string name='textTopic'>Choose a topic</string>
     <string name='textOffice'>Office or School</string>
     <string name='textKitchen'>Kitchen</string>
     <string name='textFood'>Food</string>
@@ -48,7 +48,7 @@
     <string name='textSides'>Sides</string>
     <string name='textDesserts'>Desserts</string>
     <string name='textRoadTrip'>Road Trip</string>
-    <string name='textSearchOpponent'>Searching for opponent.</string>
+    <string name='textSearchOpponent'>Searching for opponent</string>
     <string name='textReady'>Ready?</string>
     <string name='textWin'>You win!</string>
     <string name='textLose'>You lose.</string>
