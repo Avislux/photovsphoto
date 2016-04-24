@@ -39,10 +39,19 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/textGo"
+        android:text="@string/textTakePicture"
         android:id="@+id/buttonGo"
-        android:layout_marginTop="103dp"
+        android:layout_marginTop="40dp"
         android:layout_below="@+id/textViewAnalyzeDescription"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textChooseFile"
+        android:id="@+id/buttonChooseFile"
+        android:layout_below="@+id/buttonGo"
+        android:layout_centerHorizontal="true"
+        android:nestedScrollingEnabled="false" />
 
 </RelativeLayout>

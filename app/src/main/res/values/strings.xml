@@ -52,10 +52,8 @@
     <string name='textReady'>Ready?</string>
     <string name='textWin'>You win!</string>
     <string name='textLose'>You lose.</string>
-
-    <!-- FOR SCORING --><!--JT: really? you could just display an integer -->
-    <!--B: Sorry, I am eliminating it. -->
-
+    <string name='textTakePicture'>Take Picture</string>
+    <string name='textChooseFile'>Choose File</string>
     <!-- USED BY DEMO FEATURES ONLY - YOU CAN DISCARD THESE WITH THE DEMO FOLDER -->
 
     <string name="fragment_demo_instruction_overview_header">Overview</string>
