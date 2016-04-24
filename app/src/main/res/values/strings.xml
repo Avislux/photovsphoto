@@ -54,6 +54,9 @@
     <string name='textLose'>You lose.</string>
     <string name='textTakePicture'>Take Picture</string>
     <string name='textChooseFile'>Choose File</string>
+    <string name='textGameType'>Choose Game Type</string>
+    <string name='textLightning'>Lightning</string>
+    <string name='textCasual'>Casual</string>
     <!-- USED BY DEMO FEATURES ONLY - YOU CAN DISCARD THESE WITH THE DEMO FOLDER -->
 
     <string name="fragment_demo_instruction_overview_header">Overview</string>

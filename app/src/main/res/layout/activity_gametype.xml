@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/textGameType"
+        android:id="@+id/textViewGameType"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textLightning"
+        android:id="@+id/buttonLightning"
+        android:layout_marginTop="63dp"
+        android:layout_below="@+id/textViewGameType"
+        android:layout_alignLeft="@+id/textViewGameType"
+        android:layout_alignStart="@+id/textViewGameType" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textCasual"
+        android:id="@+id/buttonCasual"
+        android:layout_marginTop="57dp"
+        android:layout_below="@+id/buttonLightning"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
