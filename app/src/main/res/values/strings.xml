@@ -28,6 +28,7 @@
     <string name='text_Analyze_overview'>Test the image recognition.</string>
     <string name="textTitleText">Photo VS Photo</string>
     <string name="textOr">or</string>
+    <string name="textUploadComplete">Upload Complete.</string>
     <!--<string name="severClientId">214434602970-lut27as1p38nptk7nkfc1rn3hqfu8i13.apps.googleusercontent.com</string>-->
     <string name="textPlay">Play</string>
     <string name="textPlaySolo">Play Solo</string>

@@ -3,8 +3,10 @@ package com.cpp.photovsphoto.fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -251,7 +253,7 @@ public class fragment_analyze extends FragmentBase {
     private static final int EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 93;
     private void onChooseFile(){
         final Intent intent = ImageSelectorUtils.getImageSelectionIntent();
-
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, "data");
         startActivityForResult(intent, 0);
 
 
@@ -265,15 +267,20 @@ public class fragment_analyze extends FragmentBase {
     public void onActivityResult(int requestCode, int resultCode, Intent data) { //(3)
         Log.d("AnalyzeFragment: ", "onActivityResult got called");
         Uri tempUri;
+        TextView textView = (TextView) getView().findViewById(R.id.textViewFileName);
         if (resultCode == Activity.RESULT_OK) {
             tempUri = data.getData(); //OMFG
+
             if (requestCode == REQUEST_IMAGE_CAPTURE ) {
                 Log.d("AnalyzeFragment: ", "Back from camera intent");
-
-
-                Intent takePictureIntent = getActivity().getIntent();
                 Bundle extras = data.getExtras();
+
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
+                ImageView imageView = (ImageView) getView().findViewById(R.id.imageViewPicture); //set imageview thumbnail
+                imageView.setImageBitmap(imageBitmap); //set thumbnail to photo
+
+                //Intent takePictureIntent = getActivity().getIntent();
+
                 //String tempstring = getActivity().getIntent().getStringExtra("temporaryFileUri");
                 // String tempstring = extras.getString("temporaryFileUri");
                 //Log.d("AnalyzeFragment: ", "path " + tempstring);
@@ -283,10 +290,9 @@ public class fragment_analyze extends FragmentBase {
                 //mCurrentPhotoPath = fileUri.toString();
                 String toastText = "onactivityresult: " + tempUri;
                 Toast myToast = Toast.makeText(getActivity(), toastText, Toast.LENGTH_LONG);
-                myToast.show();
+               // myToast.show();
                 galleryAddPic();
-                ImageView imageView = (ImageView) getView().findViewById(R.id.imageViewPicture); //set imageview thumbnail
-                imageView.setImageBitmap(imageBitmap); //set thumbnail to photo
+
                 File image = new File(tempUri.toString());
                 String absolutePath = image.getAbsolutePath();
                 Log.d("AnalyzeFragment: ", "uri " + tempUri);
@@ -318,7 +324,7 @@ public class fragment_analyze extends FragmentBase {
                 Log.d("AnalyzeFragment: ", "HIHIHIHIH");
                 Log.d("AnalyzeFragment: ", "absolute path: " + absolutePath);
                 Log.d("AnalyzeFragment: ", tempUri.toString() + gFileName);
-                //TODO: Delete files after use?
+
             }
             else {
                 Log.d("AnalyzeFragment: ", " back from file picker intent");
@@ -326,8 +332,9 @@ public class fragment_analyze extends FragmentBase {
                 Log.d(LOG_TAG, "file path: " + path);
                 globalUri = tempUri;
                 gPath = path;
+                textView.setText(path);
                 //TODO: set image from this
-                //TODO: show file name
+
             }
         }
 
@@ -348,6 +355,7 @@ public class fragment_analyze extends FragmentBase {
 
         Log.d(LOG_TAG, "onclickupload file path: " +gPath);
         final ProgressDialog dialog = new ProgressDialog(getActivity());
+        final AlertDialog.Builder completeDialog = new AlertDialog.Builder(getActivity());
         dialog.setTitle(R.string.content_progress_dialog_title_wait);
         dialog.setMessage(
                 getString(R.string.user_files_browser_progress_dialog_message_upload_file,
@@ -365,6 +373,16 @@ public class fragment_analyze extends FragmentBase {
             public void onSuccess(final ContentItem contentItem) {
                 Log.d("AnalyzeFragment: ", "Upload successful");
                 dialog.dismiss();
+                completeDialog.setTitle(R.string.textUploadComplete);
+                completeDialog.setMessage(R.string.textUploadComplete);
+                completeDialog.setCancelable(true);
+                completeDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog1, int id) {
+                        dialog1.cancel();
+                    }
+                });
+                AlertDialog uploadCompleteAlert = completeDialog.create();
+                uploadCompleteAlert.show();
             }
 
             @Override
@@ -384,7 +402,9 @@ public class fragment_analyze extends FragmentBase {
         });
 
     }
+    private void waitForResponse(){
 
+    }
     private void galleryAddPic() { //TODO:Verify add to gallery
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(globalUri.toString());
