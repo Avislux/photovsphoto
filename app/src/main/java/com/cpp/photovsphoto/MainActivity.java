@@ -35,6 +35,7 @@ import com.cpp.photovsphoto.demo.DemoConfiguration;
 import com.cpp.photovsphoto.demo.HomeDemoFragment;
 import com.cpp.photovsphoto.fragments.fragment_PlayOnline;
 import com.cpp.photovsphoto.fragments.fragment_PlaySolo;
+import com.cpp.photovsphoto.fragments.fragment_analysis_result;
 import com.cpp.photovsphoto.fragments.fragment_analyze;
 import com.cpp.photovsphoto.navigation.Configuration;
 import com.cpp.photovsphoto.navigation.HomeFragment;
@@ -45,7 +46,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, fragment_analyze.OnFragmentInteractionListener,
                                                                         fragment_PlayOnline.OnFragmentInteractionListener,
-                                                                fragment_PlaySolo.OnFragmentInteractionListener
+                                                                fragment_PlaySolo.OnFragmentInteractionListener,
+                                                          fragment_analysis_result.OnFragmentInteractionListener
             {
     /** Class name for log messages. */
     private final static String LOG_TAG = MainActivity.class.getSimpleName();

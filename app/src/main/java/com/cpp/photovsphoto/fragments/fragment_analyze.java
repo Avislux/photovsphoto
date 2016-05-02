@@ -17,7 +17,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,7 +67,7 @@ import java.util.Date;
  * create an instance of this fragment.
  */
 
-public class fragment_analyze extends FragmentBase {
+public class fragment_analyze extends FragmentBase  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String LOG_TAG = "AnalyzeActivity";
@@ -81,13 +84,8 @@ public class fragment_analyze extends FragmentBase {
     private String prefix;
     public static final String BUNDLE_ARGS_S3_BUCKET = "bucket";
     public static final String BUNDLE_ARGS_S3_PREFIX = "prefix";
-    //protected final TransferHelper transferHelper;
-
     private OnFragmentInteractionListener mListener;
 
-    //AmazonS3 s3 = new AmazonS3Client(credentialsProvider);
-
-    //s3.setRegion(Region.getRegion(Regions.MY_BUCKET_REGION));
     public fragment_analyze() {
         // Required empty public constructor
     }
@@ -117,10 +115,6 @@ public class fragment_analyze extends FragmentBase {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        //transferHelper = S3TransferHelper.build(context, s3Client, bucket,
-          //      this.s3DirPrefix, localTransferPath, localContentCache);
-
-
         bucket = AWSConfiguration.AMAZON_S3_USER_FILES_BUCKET;
         prefix = "prefix";
         //final ProgressDialog dialog = getProgressDialog(R.string.content_progress_dialog_message_load_local_content);
@@ -173,14 +167,6 @@ public class fragment_analyze extends FragmentBase {
         });
         return view ;
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -262,7 +248,7 @@ public class fragment_analyze extends FragmentBase {
 
 
     }
-    String gPath = "poop";
+    String gPath = null;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) { //(3)
         Log.d("AnalyzeFragment: ", "onActivityResult got called");
@@ -320,7 +306,6 @@ public class fragment_analyze extends FragmentBase {
                         e.printStackTrace();
                     }
                 }
-                gPath = absolutePath;
                 Log.d("AnalyzeFragment: ", "HIHIHIHIH");
                 Log.d("AnalyzeFragment: ", "absolute path: " + absolutePath);
                 Log.d("AnalyzeFragment: ", tempUri.toString() + gFileName);
@@ -351,59 +336,79 @@ public class fragment_analyze extends FragmentBase {
 
     public void onClickUpload() {
         //upload to aws
-        //File finalFile = new File(getRealPathFromURI(fileUri));
+        if(gPath == null){
+            Log.d(LOG_TAG, "Upload: Path is null");
+            final AlertDialog.Builder nullPath = new AlertDialog.Builder(getActivity());
+            nullPath.setTitle(R.string.textNoFileSelected);
+            nullPath.setMessage(R.string.textNoFileSelected);
+            nullPath.setCancelable(true);
+            nullPath.show();
+            nullPath.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogNull, int id) {
+                    dialogNull.cancel();
 
-        Log.d(LOG_TAG, "onclickupload file path: " +gPath);
-        final ProgressDialog dialog = new ProgressDialog(getActivity());
-        final AlertDialog.Builder completeDialog = new AlertDialog.Builder(getActivity());
-        dialog.setTitle(R.string.content_progress_dialog_title_wait);
-        dialog.setMessage(
-                getString(R.string.user_files_browser_progress_dialog_message_upload_file,
-                        gPath));
-        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                }
+            });
+        }
+        else {
 
-        dialog.setCancelable(true);
-        dialog.show();
+            Log.d(LOG_TAG, "onclickupload file path: " + gPath);
+            final ProgressDialog dialog = new ProgressDialog(getActivity());
+            final AlertDialog.Builder completeDialog = new AlertDialog.Builder(getActivity());
+            dialog.setTitle(R.string.content_progress_dialog_title_wait);
+            dialog.setMessage(
+                    getString(R.string.user_files_browser_progress_dialog_message_upload_file,
+                            gPath));
+            dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 
-        File file = new File(gPath);
+            dialog.setCancelable(true);
+            dialog.show();
+
+            File file = new File(gPath);
 
 
-        userFileManager.uploadContent(file, file.getName(), new ContentProgressListener() {
-            @Override
-            public void onSuccess(final ContentItem contentItem) {
-                Log.d("AnalyzeFragment: ", "Upload successful");
-                dialog.dismiss();
-                completeDialog.setTitle(R.string.textUploadComplete);
-                completeDialog.setMessage(R.string.textUploadComplete);
-                completeDialog.setCancelable(true);
-                completeDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog1, int id) {
-                        dialog1.cancel();
-                    }
-                });
-                AlertDialog uploadCompleteAlert = completeDialog.create();
-                uploadCompleteAlert.show();
-            }
+            userFileManager.uploadContent(file, file.getName(), new ContentProgressListener() {
+                @Override
+                public void onSuccess(final ContentItem contentItem) {
+                    Log.d("AnalyzeFragment: ", "Upload successful");
+                    dialog.dismiss();
+                    completeDialog.setTitle(R.string.textUploadComplete);
+                    completeDialog.setMessage(R.string.textUploadComplete);
+                    completeDialog.setCancelable(true);
+                    completeDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog1, int id) {
+                            dialog1.cancel();
+                            WaitForResponse();
+                        }
+                    });
+                    AlertDialog uploadCompleteAlert = completeDialog.create();
+                    uploadCompleteAlert.show();
+                }
 
-            @Override
-            public void onProgressUpdate(final String fileName, final boolean isWaiting,
-                                         final long bytesCurrent, final long bytesTotal) {
-                dialog.setProgress((int) bytesCurrent);
-                Log.d("AnalyzeFragment: ", "Upload update");
-            }
+                @Override
+                public void onProgressUpdate(final String fileName, final boolean isWaiting,
+                                             final long bytesCurrent, final long bytesTotal) {
+                    dialog.setProgress((int) bytesCurrent);
+                    Log.d("AnalyzeFragment: ", "Upload update");
+                }
 
-            @Override
-            public void onError(final String fileName, final Exception ex) {
-                dialog.dismiss();
-                Log.d("AnalyzeFragment: ", "upload error");
-                showError(R.string.user_files_browser_error_message_upload_file,
-                        ex.getMessage());
-            }
-        });
-
+                @Override
+                public void onError(final String fileName, final Exception ex) {
+                    dialog.dismiss();
+                    Log.d("AnalyzeFragment: ", "upload error");
+                    showError(R.string.user_files_browser_error_message_upload_file,
+                            ex.getMessage());
+                }
+            });
+        }
     }
-    private void waitForResponse(){
-
+    private void WaitForResponse(){ //inflate new fragment
+        FragmentActivity activity = this.getActivity();
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment_container, new fragment_analysis_result(), "Results")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit();
     }
     private void galleryAddPic() { //TODO:Verify add to gallery
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);

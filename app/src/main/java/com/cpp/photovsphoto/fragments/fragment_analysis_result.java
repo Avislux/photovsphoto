@@ -7,8 +7,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.mobile.AWSConfiguration;
+import com.amazonaws.mobile.AWSMobileClient;
+import com.amazonaws.mobile.content.TransferHelper;
+import com.amazonaws.mobile.content.UserFileManager;
+import com.amazonaws.mobile.user.IdentityManager;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectListing;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.cpp.photovsphoto.R;
+import com.amazonaws.ClientConfiguration;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,10 +38,17 @@ public class fragment_analysis_result extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private TransferHelper transferHelper;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private UserFileManager userFileManager;
+    final ClientConfiguration clientConfiguration = new ClientConfiguration();
+    private String bucket = AWSConfiguration.AMAZON_S3_USER_FILES_BUCKET;
+    private IdentityManager identityManager;
+    private AmazonS3Client s3 = null;
+    //s3.setRegion(Region.getRegion(Regions.MY_BUCKET_REGION));
+    //TransferUtility transferUtility = new TransferUtility(s3, APPLICATION_CONTEXT);
 
     private OnFragmentInteractionListener mListener;
 
@@ -59,21 +81,37 @@ public class fragment_analysis_result extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
 
+        AWSMobileClient.defaultMobileClient()
+                .createUserFileManager(bucket, "public",
+                        new UserFileManager.BuilderResultHandler() {
+                            @Override
+                            public void onComplete(final UserFileManager userFileManager) {
+                                if (!isAdded()) {
+                                    userFileManager.destroy();
+                                    return;
+                                }
+
+                                fragment_analysis_result.this.userFileManager = userFileManager;
+
+                            }
+                        });
+        identityManager = new IdentityManager(getActivity(),clientConfiguration);
+        s3 = new AmazonS3Client(identityManager.getCredentialsProvider(), clientConfiguration);
+        clientConfiguration.setUserAgent(AWSConfiguration.AWS_MOBILEHUB_USER_AGENT);
+
+    }
+    TextView textViewStatus;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_analysis_result, container, false);
+        View view = inflater.inflate(R.layout.fragment_analysis_result, container, false); //do it this way otherwise calls waitforresponse too soon.
+        WaitForResponse(); //TODO:Still notworking;
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -84,6 +122,7 @@ public class fragment_analysis_result extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
     }
 
     @Override
@@ -92,18 +131,28 @@ public class fragment_analysis_result extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    private void WaitForResponse(){ //currently just attempt to list items
+        /*
+        ObjectListing listing = s3.listObjects( bucket, "" ); //blank prefix
+        List<S3ObjectSummary> summaries = listing.getObjectSummaries();
+
+        while (listing.isTruncated()) {
+            listing = s3.listNextBatchOfObjects (listing);
+            summaries.addAll (listing.getObjectSummaries());
+        }
+        textViewStatus.setText(listing.toString());*/
+        textViewStatus = (TextView) getView().findViewById(R.id.textViewStatus);
+        textViewStatus.setText("You're a faggot Harry");
+        //transferHelper.download(String filePath, long fileSize, ContentProgressListener listener);
+    }
+
+
+
+
 }

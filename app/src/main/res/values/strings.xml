@@ -189,5 +189,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="textUpload">Upload</string>
+    <string name="stringResultsInitial">Waiting on change on S3.</string>
+    <string name="textNoFileSelected">Please select a file.</string>
 </resources>
 
