@@ -23,6 +23,8 @@ import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.cpp.photovsphoto.R;
 import com.amazonaws.ClientConfiguration;
+import com.cpp.photovsphoto.navigation.FragmentBase;
+
 import java.util.List;
 
 /**
@@ -33,7 +35,7 @@ import java.util.List;
  * Use the {@link fragment_analysis_result#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_analysis_result extends Fragment {
+public class fragment_analysis_result extends FragmentBase {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -101,13 +103,15 @@ public class fragment_analysis_result extends Fragment {
         clientConfiguration.setUserAgent(AWSConfiguration.AWS_MOBILEHUB_USER_AGENT);
 
     }
+
     TextView textViewStatus;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_analysis_result, container, false); //do it this way otherwise calls waitforresponse too soon.
-        WaitForResponse(); //TODO:Still notworking;
+        textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);;
+        WaitForResponse();
         return view;
     }
 
@@ -138,7 +142,7 @@ public class fragment_analysis_result extends Fragment {
     }
 
     private void WaitForResponse(){ //currently just attempt to list items
-        /*
+
         ObjectListing listing = s3.listObjects( bucket, "" ); //blank prefix
         List<S3ObjectSummary> summaries = listing.getObjectSummaries();
 
@@ -146,9 +150,9 @@ public class fragment_analysis_result extends Fragment {
             listing = s3.listNextBatchOfObjects (listing);
             summaries.addAll (listing.getObjectSummaries());
         }
-        textViewStatus.setText(listing.toString());*/
-        textViewStatus = (TextView) getView().findViewById(R.id.textViewStatus);
-        textViewStatus.setText("You're a faggot Harry");
+        textViewStatus.setText(listing.toString());
+
+        //textViewStatus.setText("You're a faggot Harry");
         //transferHelper.download(String filePath, long fileSize, ContentProgressListener listener);
     }
 
