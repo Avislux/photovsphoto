@@ -82,8 +82,7 @@ public class fragment_analyze extends FragmentBase  {
     private UserFileManager userFileManager;
     private String bucket;
     private String prefix;
-    public static final String BUNDLE_ARGS_S3_BUCKET = "bucket";
-    public static final String BUNDLE_ARGS_S3_PREFIX = "prefix";
+
     private OnFragmentInteractionListener mListener;
 
     public fragment_analyze() {
@@ -209,32 +208,27 @@ public class fragment_analyze extends FragmentBase  {
         public void onFragmentInteraction(Uri uri);
     }
     static String gFileName;
-    //String mCurrentPhotoPath;
+
     private Uri globalUri;
-    //private Uri fileUri;
+
     private void dispatchTakePictureIntent() { //opens camera app (2)
         Uri tempfileUri;
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        tempfileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+        //tempfileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); //Taking out making blank file
 
-        String tempfileUriString = tempfileUri.getPath();
+        //String tempfileUriString = tempfileUri.getPath(); //Taking out making blank file
 
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, "data"); //key, value
-        //takePictureIntent.putExtra("temporaryFileUri",tempfileUriString); //nope not working
+
 
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             Log.d("AnalyzeFragment: ", "startActivityforResult got called");
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 
         }
-       // if (photoFile != null) {//  }
-
-
-
-
-        Toast.makeText(getActivity(), "temp file " + tempfileUri, Toast.LENGTH_SHORT).show();
-        Log.d("AnalyzeFragment: ", "dispatchtakepictureintent " + tempfileUriString);
+        //Toast.makeText(getActivity(), "temp file " + tempfileUri, Toast.LENGTH_SHORT).show(); //Taking out making blank file
+        //Log.d("AnalyzeFragment: ", "dispatchtakepictureintent " + tempfileUriString); //Taking out making blank file
     }
     private static final int EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 93;
     private void onChooseFile(){
@@ -260,17 +254,9 @@ public class fragment_analyze extends FragmentBase  {
             if (requestCode == REQUEST_IMAGE_CAPTURE ) {
                 Log.d("AnalyzeFragment: ", "Back from camera intent");
                 Bundle extras = data.getExtras();
-
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 ImageView imageView = (ImageView) getView().findViewById(R.id.imageViewPicture); //set imageview thumbnail
                 imageView.setImageBitmap(imageBitmap); //set thumbnail to photo
-
-                //Intent takePictureIntent = getActivity().getIntent();
-
-                //String tempstring = getActivity().getIntent().getStringExtra("temporaryFileUri");
-                // String tempstring = extras.getString("temporaryFileUri");
-                //Log.d("AnalyzeFragment: ", "path " + tempstring);
-                //tempUri = Uri.parse(extras.getString("temporaryFileUri"));
                 globalUri = tempUri;
                 //tempUri = globalUri;
                 //mCurrentPhotoPath = fileUri.toString();
@@ -282,7 +268,6 @@ public class fragment_analyze extends FragmentBase  {
                 File image = new File(tempUri.toString());
                 String absolutePath = image.getAbsolutePath();
                 Log.d("AnalyzeFragment: ", "uri " + tempUri);
-
                 FileOutputStream out = null;
 
                 try {

@@ -1,9 +1,13 @@
 package com.cpp.photovsphoto.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +24,13 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectListing;
+import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.cpp.photovsphoto.R;
 import com.amazonaws.ClientConfiguration;
 import com.cpp.photovsphoto.navigation.FragmentBase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -101,7 +107,9 @@ public class fragment_analysis_result extends FragmentBase {
         identityManager = new IdentityManager(getActivity(),clientConfiguration);
         s3 = new AmazonS3Client(identityManager.getCredentialsProvider(), clientConfiguration);
         clientConfiguration.setUserAgent(AWSConfiguration.AWS_MOBILEHUB_USER_AGENT);
-
+        StrictMode.ThreadPolicy tp = StrictMode.ThreadPolicy.LAX;
+        StrictMode.setThreadPolicy(tp);
+        Log.d("Analysis Result: ", "s3 init");
     }
 
     TextView textViewStatus;
@@ -142,16 +150,37 @@ public class fragment_analysis_result extends FragmentBase {
     }
 
     private void WaitForResponse(){ //currently just attempt to list items
+        int i = 0;
+        try {
+            ObjectListing listing = s3.listObjects(bucket, "public/"); //grabs from folder
+            List<S3ObjectSummary> summaries = new ArrayList<>();
+            summaries = listing.getObjectSummaries();
+            List<String> keys =  new ArrayList<>();
+            while (listing.isTruncated()) {
+                listing = s3.listNextBatchOfObjects(listing);
+                summaries.addAll(listing.getObjectSummaries());
 
-        ObjectListing listing = s3.listObjects( bucket, "" ); //blank prefix
-        List<S3ObjectSummary> summaries = listing.getObjectSummaries();
-
-        while (listing.isTruncated()) {
-            listing = s3.listNextBatchOfObjects (listing);
-            summaries.addAll (listing.getObjectSummaries());
+            }
+            for (i=0;i < summaries.size();i++ ){
+                keys.add(summaries.get(i).getKey());
+            }
+            textViewStatus.setText(keys.toString());
+            Log.d("Analysis Results: ", keys.toString());
         }
-        textViewStatus.setText(listing.toString());
+        catch(Exception e){
+            Log.d("Analysis Results: ", "Error: " + e.getMessage());
+            final AlertDialog.Builder bucketError = new AlertDialog.Builder(getActivity());
+            bucketError.setTitle("Error");
+            bucketError.setMessage(e.getMessage());
+            bucketError.setCancelable(true);
+            bucketError.show();
+            bucketError.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogNull, int id) {
+                    dialogNull.cancel();
 
+                }
+            });
+        }
         //textViewStatus.setText("You're a faggot Harry");
         //transferHelper.download(String filePath, long fileSize, ContentProgressListener listener);
     }
