@@ -23,6 +23,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
@@ -30,6 +31,10 @@ import com.cpp.photovsphoto.R;
 import com.amazonaws.ClientConfiguration;
 import com.cpp.photovsphoto.navigation.FragmentBase;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,7 +157,8 @@ public class fragment_analysis_result extends FragmentBase {
     private void WaitForResponse(){ //currently just attempt to list items
         int i = 0;
         try {
-            ObjectListing listing = s3.listObjects(bucket, "public/"); //grabs from folder
+            /* //This commented block retrieves a list of files from the bucket saving it just in case we need to it to detect change"
+            ObjectListing listing = s3.listObjects(bucket, "results/"); //grabs from folder
             List<S3ObjectSummary> summaries = new ArrayList<>();
             summaries = listing.getObjectSummaries();
             List<String> keys =  new ArrayList<>();
@@ -166,6 +172,15 @@ public class fragment_analysis_result extends FragmentBase {
             }
             textViewStatus.setText(keys.toString());
             Log.d("Analysis Results: ", keys.toString());
+            */
+
+            S3Object object = s3.getObject(
+                    new GetObjectRequest(bucket, "results/test.txt"));
+            InputStream objectData = object.getObjectContent();
+            Log.d("Analysis Results: ", objectData.toString());
+            textViewStatus.setText("");
+            displayTextInputStream(object.getObjectContent());
+            objectData.close();
         }
         catch(Exception e){
             Log.d("Analysis Results: ", "Error: " + e.getMessage());
@@ -184,7 +199,20 @@ public class fragment_analysis_result extends FragmentBase {
         //textViewStatus.setText("You're a faggot Harry");
         //transferHelper.download(String filePath, long fileSize, ContentProgressListener listener);
     }
+    private void displayTextInputStream(InputStream input)
+            throws IOException {
+        // Read one text line at a time and display.
+        BufferedReader reader = new BufferedReader(new
+                InputStreamReader(input));
+        while (true) {
+            String line = reader.readLine();
+            if (line == null) break;
 
+            System.out.println("    " + line);
+            textViewStatus.append(line + "\n");
+        }
+        System.out.println();
+    }
 
 
 
