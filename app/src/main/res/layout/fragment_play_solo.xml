@@ -19,22 +19,14 @@ tools:context="com.photovphoto.jonathan.photovphoto.PlaySolo">
     android:id="@+id/textTitle"
     android:layout_alignParentTop="true"
     android:layout_centerHorizontal="true"
-    android:textColor="#5770ff" />
+    android:textColor="#000000" />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="@string/textPlay"
-    android:id="@+id/textView"
-    android:layout_marginTop="78dp"
-    android:textColor="#0004ff"
-    android:textSize="30sp"
-    android:textIsSelectable="false"
-    android:textAlignment="center"
-    android:onClick="onClickPlay"
-    android:background="#bdbdbd"
-    android:layout_below="@+id/textTitle"
-    android:layout_centerHorizontal="true"
-    android:singleLine="true" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play"
+        android:id="@+id/buttonPlay"
+        android:layout_below="@+id/textTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="101dp" />
 </RelativeLayout>

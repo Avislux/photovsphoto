@@ -4,11 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.cpp.photovsphoto.R;
+import com.cpp.photovsphoto.Topics;
 import com.cpp.photovsphoto.navigation.FragmentBase;
 
 /**
@@ -61,14 +65,29 @@ public class fragment_PlaySolo extends FragmentBase {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    Button playButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_play_solo, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_play_solo, container, false);
+        playButton = (Button) view.findViewById(R.id.buttonPlay);
 
+        playButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                onClickPlay();
+            }
+        });
+        return view;
+    }
+    public void onClickPlay(){
+        FragmentActivity activity = this.getActivity();
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment_container, new Topics(), "Topics")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit();
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
