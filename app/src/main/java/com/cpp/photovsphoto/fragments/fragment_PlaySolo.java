@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,18 +70,23 @@ public class fragment_PlaySolo extends FragmentBase {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_play_solo, container, false);
-        playButton = (Button) view.findViewById(R.id.buttonPlay);
+
+        View view2 = inflater.inflate(R.layout.fragment_play_solo, container, false);
+        playButton = (Button) view2.findViewById(R.id.buttonPlay);
+
 
         playButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 onClickPlay();
+                Log.d("Play Solo: ", "Play button clicked");
             }
         });
-        return view;
+        Log.d("Play Solo: ", "Inflated");
+        return view2;
     }
-    public void onClickPlay(){
+    private void onClickPlay(){
+        Log.d("Play Solo: ", "onclickplay");
         FragmentActivity activity = this.getActivity();
         activity.getSupportFragmentManager()
                 .beginTransaction()
