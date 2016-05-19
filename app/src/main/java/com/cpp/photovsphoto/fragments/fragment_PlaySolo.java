@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.cpp.photovsphoto.R;
 import com.cpp.photovsphoto.Topics;
@@ -67,26 +69,34 @@ public class fragment_PlaySolo extends FragmentBase {
         }
     }
     Button playButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        Log.d("Play Solo: ", "Inflated");
         View view2 = inflater.inflate(R.layout.fragment_play_solo, container, false);
-        playButton = (Button) view2.findViewById(R.id.buttonPlay);
+        playButton = (Button) view2.findViewById(R.id.buttonPlayS);
 
-
-        playButton.setOnClickListener(new View.OnClickListener(){
+        playButton.setOnClickListener( new OnClickListener(){
             @Override
             public void onClick(View v) {
-                onClickPlay();
+
                 Log.d("Play Solo: ", "Play button clicked");
+                onClickPlay();
             }
-        });
-        Log.d("Play Solo: ", "Inflated");
+
+            });
+
+        Log.d("Play Solo: ", "it should work");
+
         return view2;
     }
+
+
+
     private void onClickPlay(){
         Log.d("Play Solo: ", "onclickplay");
+
         FragmentActivity activity = this.getActivity();
         activity.getSupportFragmentManager()
                 .beginTransaction()
@@ -110,6 +120,7 @@ public class fragment_PlaySolo extends FragmentBase {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        Log.d("Play Solo: ", "Attach");
     }
 
     @Override

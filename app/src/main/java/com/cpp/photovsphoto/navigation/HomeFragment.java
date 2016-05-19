@@ -77,7 +77,7 @@ public class HomeFragment extends FragmentBase {
                                 .replace(R.id.main_fragment_container, new fragment_PlaySolo(), item.name)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .commit();
-
+                        break;
                     case 1:
                         Log.d(logTag, "Case 2"); //playonline
                         activity.getSupportFragmentManager()

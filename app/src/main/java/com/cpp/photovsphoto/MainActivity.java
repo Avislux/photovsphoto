@@ -47,7 +47,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, fragment_analyze.OnFragmentInteractionListener,
                                                                         fragment_PlayOnline.OnFragmentInteractionListener,
                                                                 fragment_PlaySolo.OnFragmentInteractionListener,
-                                                          fragment_analysis_result.OnFragmentInteractionListener
+                                                          fragment_analysis_result.OnFragmentInteractionListener,
+                                                            Topics.OnFragmentInteractionListener
             {
     /** Class name for log messages. */
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
