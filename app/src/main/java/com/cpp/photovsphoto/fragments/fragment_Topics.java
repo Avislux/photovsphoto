@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +78,7 @@ public class fragment_Topics extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d("Topics: ", "Inflated");
         View view = inflater.inflate(R.layout.fragment_topics, container, false);
         officeButton = (Button) view.findViewById(R.id.buttonOffice);
         kitchenButton = (Button) view.findViewById(R.id.buttonKitchen);
@@ -90,58 +92,79 @@ public class fragment_Topics extends Fragment {
         officeButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                WaitForResponse();
+                Log.d("Office: ", "Office button clicked");
+                onClickPlay();
             }
         });
         kitchenButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                WaitForResponse();
+                Log.d("Kitchen: ", "Kitchen button clicked");
+                onClickPlay();
             }
         });
         foodButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                WaitForResponse();
+                Log.d("Food: ", "Food button clicked");
+                onClickPlay();
             }
         });
         petItemsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                WaitForResponse();
+                Log.d("Pet Items: ", "Pet Items button clicked");
+                onClickPlay();
             }
         });
         bcGamesButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                WaitForResponse();
+                Log.d("Board & Card Games: ", "Games button clicked");
+                onClickPlay();
             }
         });
         drinksButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                WaitForResponse();
+                Log.d("Drinks: ", "Drinks button clicked");
+                onClickPlay();
             }
         });
         sidesButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                WaitForResponse();
+                Log.d("Sides: ", "Sides button clicked");
+                onClickPlay();
             }
         });
         dessertsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                WaitForResponse();
+                Log.d("Desserts: ", "Desserts button clicked");
+                onClickPlay();
             }
         });
         roadTripButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                WaitForResponse();
+                Log.d("Road Trip: ", "Road Trip button clicked");
+                onClickPlay();
             }
         });
-        return inflater.inflate(R.layout.fragment_topics, container, false);
+        Log.d("Topics: ", "it should work");
+        return view;
+    }
+
+    private void onClickPlay(){
+        Log.d("Button: ", "onclickplay");
+
+        FragmentActivity activity = this.getActivity();
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment_container, new fragment_Versus(), "Versus")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -160,6 +183,7 @@ public class fragment_Topics extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        Log.d("Topics: ", "Attach");
     }
 
     @Override
@@ -181,14 +205,5 @@ public class fragment_Topics extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    private void WaitForResponse(){ //inflate new fragment
-        FragmentActivity activity = this.getActivity();
-        activity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_fragment_container, new Versus(), "Versus")
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit();
     }
 }

@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.cpp.photovsphoto.R;
 import com.cpp.photovsphoto.Topics;
@@ -100,7 +99,7 @@ public class fragment_PlaySolo extends FragmentBase {
         FragmentActivity activity = this.getActivity();
         activity.getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_fragment_container, new Topics(), "Topics")
+                .replace(R.id.main_fragment_container, new fragment_Topics(), "Topics")
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
     }

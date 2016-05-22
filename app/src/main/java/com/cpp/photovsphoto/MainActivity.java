@@ -31,10 +31,10 @@ import com.amazonaws.mobile.user.IdentityManager;
 import com.amazonaws.mobileconnectors.cognito.Dataset;
 import com.amazonaws.mobileconnectors.cognito.DefaultSyncCallback;
 import com.amazonaws.mobileconnectors.cognito.Record;
-import com.cpp.photovsphoto.demo.DemoConfiguration;
-import com.cpp.photovsphoto.demo.HomeDemoFragment;
 import com.cpp.photovsphoto.fragments.fragment_PlayOnline;
 import com.cpp.photovsphoto.fragments.fragment_PlaySolo;
+import com.cpp.photovsphoto.fragments.fragment_Topics;
+import com.cpp.photovsphoto.fragments.fragment_Versus;
 import com.cpp.photovsphoto.fragments.fragment_analysis_result;
 import com.cpp.photovsphoto.fragments.fragment_analyze;
 import com.cpp.photovsphoto.navigation.Configuration;
@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                                         fragment_PlayOnline.OnFragmentInteractionListener,
                                                                 fragment_PlaySolo.OnFragmentInteractionListener,
                                                           fragment_analysis_result.OnFragmentInteractionListener,
-                                                            Topics.OnFragmentInteractionListener
+                                                            fragment_Topics.OnFragmentInteractionListener,
+        fragment_Versus.OnFragmentInteractionListener
             {
     /** Class name for log messages. */
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
