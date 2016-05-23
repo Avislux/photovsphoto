@@ -101,6 +101,7 @@ public class fragment_PlaySolo extends FragmentBase {
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, new fragment_Topics(), "Topics")
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack("Topics")
                 .commit();
     }
     // TODO: Rename method, update argument and hook method into UI event

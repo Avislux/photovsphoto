@@ -157,8 +157,9 @@ public class fragment_analysis_result extends FragmentBase {
     private void WaitForResponse(){ //currently just attempt to list items
         int i = 0;
         try {
-            /* //This commented block retrieves a list of files from the bucket saving it just in case we need to it to detect change"
+             //This commented block retrieves a list of files from the bucket saving it just in case we need to it to detect change"
             ObjectListing listing = s3.listObjects(bucket, "results/"); //grabs from folder
+            ObjectListing oldListing = null;
             List<S3ObjectSummary> summaries = new ArrayList<>();
             summaries = listing.getObjectSummaries();
             List<String> keys =  new ArrayList<>();
@@ -170,12 +171,30 @@ public class fragment_analysis_result extends FragmentBase {
             for (i=0;i < summaries.size();i++ ){
                 keys.add(summaries.get(i).getKey());
             }
-            textViewStatus.setText(keys.toString());
-            Log.d("Analysis Results: ", keys.toString());
-            */
+            oldListing = listing;
+            long startTime = System.currentTimeMillis();
+            while(oldListing==listing && (System.currentTimeMillis()-startTime)<10000) { //time out after 10
+                summaries = listing.getObjectSummaries();
+                while (listing.isTruncated()) {
+                    listing = s3.listNextBatchOfObjects(listing);
+                    summaries.addAll(listing.getObjectSummaries());
 
+                }
+                for (i=0;i < summaries.size();i++ ){
+                    keys.add(summaries.get(i).getKey());
+                }
+            }
+            if ((System.currentTimeMillis()-startTime)>10000) Log.d("Analysis Results: ", "Timed out");
+            //Log.d("Analysis Results: ", keys.toString());
+
+            String key = "results/" + fragment_analyze.fileName;
+            int pos = key.lastIndexOf(".");
+            if (pos > 0) {
+                key = key.substring(0, pos) + ".txt";
+            }
+            Log.d("Analysis Results: ",key);
             S3Object object = s3.getObject(
-                    new GetObjectRequest(bucket, "results/test.txt"));
+                    new GetObjectRequest(bucket, key));
             InputStream objectData = object.getObjectContent();
             Log.d("Analysis Results: ", objectData.toString());
             textViewStatus.setText("");
@@ -213,7 +232,6 @@ public class fragment_analysis_result extends FragmentBase {
         }
         System.out.println();
     }
-
 
 
 }

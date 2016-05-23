@@ -39,4 +39,5 @@ public class FragmentBase extends Fragment {
             }
         }.execute();
     }
+
 }

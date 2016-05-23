@@ -70,7 +70,7 @@ import java.util.Date;
 public class fragment_analyze extends FragmentBase  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String LOG_TAG = "AnalyzeActivity";
+    private static final String LOG_TAG = "AnalyzeFragment";
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -318,7 +318,7 @@ public class fragment_analyze extends FragmentBase  {
         //expands iamge
     }
 
-
+    static String fileName = null;
     public void onClickUpload() {
         //upload to aws
         if(gPath == null){
@@ -350,9 +350,15 @@ public class fragment_analyze extends FragmentBase  {
             dialog.show();
 
             File file = new File(gPath);
-
-
-            userFileManager.uploadContent(file, file.getName(), new ContentProgressListener() {
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            Log.d(LOG_TAG,  "Time: " +timeStamp);
+            fileName = file.getName();
+            int pos = fileName.lastIndexOf(".");
+            if (pos > 0) {
+                fileName = fileName.substring(0, pos) +"_" + timeStamp + ".jpg";
+            }
+            Log.d(LOG_TAG,  fileName);
+            userFileManager.uploadContent(file, fileName, new ContentProgressListener() {
                 @Override
                 public void onSuccess(final ContentItem contentItem) {
                     Log.d("AnalyzeFragment: ", "Upload successful");
@@ -393,6 +399,7 @@ public class fragment_analyze extends FragmentBase  {
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, new fragment_analysis_result(), "Results")
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack("Results")
                 .commit();
     }
     private void galleryAddPic() { //TODO:Verify add to gallery

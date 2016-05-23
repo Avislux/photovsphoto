@@ -58,6 +58,7 @@ public class HomeFragment extends FragmentBase {
                             .beginTransaction()
                             .replace(R.id.main_fragment_container, fragment, item.name)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+
                             .commit();
 
                     // Set the title for the fragment.
