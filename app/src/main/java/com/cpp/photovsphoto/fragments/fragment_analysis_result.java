@@ -184,7 +184,7 @@ public class fragment_analysis_result extends FragmentBase {
                     keys.add(summaries.get(i).getKey());
                 }
             }
-            if ((System.currentTimeMillis()-startTime)>10000) Log.d("Analysis Results: ", "Timed out");
+            if ((System.currentTimeMillis()-startTime)>20000) Log.d("Analysis Results: ", "Timed out");
             //Log.d("Analysis Results: ", keys.toString());
 
             String key = "results/" + fragment_analyze.fileName;
