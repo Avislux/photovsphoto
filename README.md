@@ -1,0 +1,1 @@
+This an an Android application some classmates and I worked on for our senior project. The goal was to make a multiplayer game which scored players based on the pictures they took. We used Amazon Web Services for server side processing, including S3, Cognito, and EC2. By the end of the school year we had a somewhat functional single player mode.
